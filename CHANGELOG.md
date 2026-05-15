@@ -52,6 +52,28 @@ Catégories d'entrées : `Ajouté` (Added), `Modifié` (Changed), `Déprécié` 
 
 ---
 
+## [0.5.0] — 2026-05-15 — Fond de carte Natural Earth (étape 5)
+
+### Ajouté
+
+- `ingestion/naturalearth.py` — module de préparation du fond de carte mondial. Télécharge le GeoJSON Admin 0 1:110m depuis le repo `nvkelso/natural-earth-vector`, simplifie les propriétés à `iso_a3`, `name`, `name_long`, `name_fr`, `continent`, `subregion`, et marque les territoires disputés selon la charte applicative.
+- Sortie principale : `site/data/world.geojson` (minifié, propriétés réduites, prêt pour MapLibre GL JS en étape 6).
+- Brut conservé : `data/raw/naturalearth-countries-110m.geojson` (intégral, indenté côté Natural Earth).
+
+### Choix techniques
+
+- **Téléchargement direct du GeoJSON** depuis le repo officiel `nvkelso/natural-earth-vector` plutôt que du Shapefile, pour éviter d'ajouter `pyshp` ou `geopandas` aux dépendances. Sobre et pertinent vu que `nvkelso` est le mainteneur officiel.
+- **Résolution 1:110m** retenue pour la vue mondiale (~600 Ko, ~177 features). Les résolutions 50m et 10m sont disponibles si besoin de zooms régionaux en v1.x+.
+- **Marquage des territoires disputés** : Western Sahara, Taiwan, Kosovo, Palestine, Israël avec note explicative neutre (statut ONU + positions divergentes). Conforme à la charte § I.2 (Neutralité cartographique assumée mais documentée).
+- **Limitations de résolution signalées** dans `studio_metadata.resolution_limitations` : Crimée et Cachemire ne sont pas des features distinctes à 1:110m, infobulle UI à prévoir en étape 6.
+
+### Notes
+
+- Aucune nouvelle dépendance Python ajoutée. Le module utilise uniquement `requests` (déjà présent) + `json` et `pathlib` (stdlib).
+- Convention v1.0 explicitement inscrite dans les métadonnées du GeoJSON pour traçabilité par le front.
+
+---
+
 ## [0.4.0] — 2026-05-15 — Ingestion SIPRI MILEX (étape 4)
 
 ### Ajouté
@@ -93,7 +115,6 @@ Catégories d'entrées : `Ajouté` (Added), `Modifié` (Changed), `Déprécié` 
 
 ## Prochaines versions prévues (roadmap Phase 2)
 
-- `0.5.0` — Fond de carte Natural Earth (étape 5)
 - `0.6.0` — Première page carte mondiale + flux RSS (étape 6)
 - `0.7.0` — Déploiement sur `geopolitique.studioatable.fr` (étape 7)
 - `0.8.0` — Cron serveur SAT actif (étape 8)
