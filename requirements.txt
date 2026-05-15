@@ -1,0 +1,5 @@
+# Dépendances Python — geopolitique-dashboard
+# Installation : pip install -r requirements.txt
+# Versions épinglées pour reproductibilité (mises à jour passées au crible audit avant bump).
+
+requests>=2.31,<3.0

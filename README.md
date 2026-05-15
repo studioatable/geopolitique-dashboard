@@ -22,16 +22,20 @@ Les documents de cadrage (charte applicative, registre des 41 sources, décision
 
 ---
 
-## Sources de données — v1.0
+## Sources de données — v1.0 (actives)
 
 | Source | Catégorie | Cadence | Accès |
 |---|---|---|---|
-| ACLED | Conflits | Hebdomadaire | Clé API gratuite |
 | SIPRI MILEX | Dépenses militaires | Annuel | Libre (XLSX) |
-| AFP RSS | Actualités | Temps réel | RSS public |
+| France 24 RSS | Actualités | Temps réel | RSS public |
 | Natural Earth | Fond de carte | Statique | Libre |
 
-Registre complet (41 sources qualifiées) dans `sources_geopolitiques.json` (dossier parent).
+### Sources reportées
+
+- **ACLED** (Conflits) — intégration prévue à l'étape 9 de la roadmap, après demande de clé API gratuite. Investigation préalable nécessaire (l'audit a relevé un `ConnectionError` sur l'endpoint API public).
+- **AFP RSS** — initialement prévue, retirée après audit (URL inscrite au registre = page descriptive, pas un flux). Remplacée par France 24 RSS (★★★, francophone, charte respectée).
+
+Registre complet (41 sources qualifiées) dans `data/registry/sources.json` ou dans le fichier maître `sources_geopolitiques.json` (dossier parent).
 
 ---
 
