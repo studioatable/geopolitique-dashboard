@@ -52,6 +52,29 @@ Catégories d'entrées : `Ajouté` (Added), `Modifié` (Changed), `Déprécié` 
 
 ---
 
+## [0.4.0] — 2026-05-15 — Ingestion SIPRI MILEX (étape 4)
+
+### Ajouté
+
+- `ingestion/sipri_milex.py` — module d'ingestion du fichier XLSX SIPRI MILEX. Télécharge, parse via `openpyxl`, extrait deux indicateurs (USD constants et % du PIB), normalise en JSON multi-indicateurs.
+- `openpyxl>=3.1,<4.0` ajouté à `requirements.txt`.
+- Sortie : `data/defense/sipri_milex.json` avec structure `{indicators: {milex_constant_usd: {...}, milex_pct_gdp: {...}}}` et données par pays/année.
+
+### Choix techniques
+
+- **URL XLSX hardcodée** en v0.4.0 (révision `SIPRI-Milex-data-1949-2025_v1.2.xlsx`, avril 2026). Évolution prévue v0.4.1 : scraping de la page d'accueil SIPRI pour suivre automatiquement les futures révisions annuelles.
+- **Auto-détection de la ligne d'en-tête** par recherche d'au moins 5 années consécutives dans les 20 premières lignes — résiste aux ajustements de mise en forme entre révisions SIPRI.
+- **Auto-détection des feuilles cibles** par patterns lower-case (ex. `["constant", "us$"]`), pour absorber les variations de libellés (année de référence USD).
+- **Exclusion des agrégats régionaux** (World total, Africa, Asia, etc.) — à intégrer dans un indicateur dédié futur si besoin.
+- **Marqueurs de données manquantes** SIPRI (`xxx`, `. .`, `..`) gérés explicitement et exclus de la sortie.
+
+### Notes
+
+- Les noms de pays sont en anglais (libellés SIPRI). Mapping vers codes ISO-3 et noms français prévu en v0.4.x via REST Countries ou un mapping local.
+- Le module n'a pas été testé contre le fichier réel côté Claude (sandbox indisponible). Premier run par Yvan : ajustements possibles sur les patterns de feuilles ou les exclusions de lignes selon la structure réelle du fichier.
+
+---
+
 ## [0.3.0] — 2026-05-15 — Ingestion France 24 RSS (étape 3)
 
 ### Ajouté
@@ -70,7 +93,6 @@ Catégories d'entrées : `Ajouté` (Added), `Modifié` (Changed), `Déprécié` 
 
 ## Prochaines versions prévues (roadmap Phase 2)
 
-- `0.4.0` — Ingestion SIPRI MILEX (étape 4)
 - `0.5.0` — Fond de carte Natural Earth (étape 5)
 - `0.6.0` — Première page carte mondiale + flux RSS (étape 6)
 - `0.7.0` — Déploiement sur `geopolitique.studioatable.fr` (étape 7)
