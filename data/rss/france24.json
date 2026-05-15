@@ -1,0 +1,372 @@
+{
+  "schema_version": "1.0.0",
+  "ingestion_script": "ingestion/france24.py",
+  "script_version": "0.3.0",
+  "source": {
+    "id": "france24_rss",
+    "name": "France 24",
+    "provider": "France Médias Monde",
+    "category": "news",
+    "feed_url": "https://www.france24.com/fr/rss",
+    "reliability": "high",
+    "license": "Usage non commercial autorisé"
+  },
+  "fetched_at_utc": "2026-05-15T14:47:02.601104+00:00",
+  "items_count": 24,
+  "items": [
+    {
+      "id": "france24_rss-5850683223b5",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "La création d'un Tribunal spécial pour l'Ukraine approuvée par 36 pays et l'UE",
+      "summary": "Quelque 34 pays membres du Conseil de l'Europe, ainsi que l'Union européenne, l'Australie et le Costa Rica, ont dit vendredi vouloir rejoindre le futur tribunal spécial pour l'Ukraine, destiné à juger l'invasion russe de ce pays. La Russie a d'ores et déjà indiqué qu'elle considérerait comme \"nulles et non avenues\" les décisions du futur tribunal.",
+      "link": "https://www.france24.com/fr/europe/20260515-cr%C3%A9ation-tribunal-sp%C3%A9cial-pour-ukraine-guerre-russie-approuvee-par-36-pays-et-union-europeenne",
+      "published_utc": "2026-05-15T14:42:05+00:00",
+      "published_raw": "Fri, 15 May 2026 14:42:05 GMT",
+      "language": "fr",
+      "tags": [
+        "Europe"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-b12e3c91b0d1",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Narcotrafic : un adolescent tué par balle à Nantes, deux autres mineurs blessés",
+      "summary": "Des habitants du quartier de Nantes où un adolescent a été tué jeudi soir sur fond de narcotrafic, ont dit vendredi matin observer une situation qui s'est \"dégradée\" récemment.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-narcotrafic-un-adolescent-tu%C3%A9-par-balle-%C3%A0-nantes-deux-autres-mineurs-bless%C3%A9s",
+      "published_utc": "2026-05-15T13:45:54+00:00",
+      "published_raw": "Fri, 15 May 2026 13:45:54 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-2934baeb95f9",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Mondial 2026 : Risser, Matela, Lacroix.. Deschamps présente sa liste de 26 joueurs",
+      "summary": "Deux absents de marque et des ouvertures: le sélectionneur de l'équipe de France Didier Deschamps a dévoilé jeudi une liste de 26 joueurs pour partir à la conquête d'une troisième Coupe du monde, en laissant sur la touche Lucas Chevalier et Eduardo Camavinga, mais en embarquant Robin Risser, Maxence Lacroix et Jean-Philippe Mateta.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-mondial-2026-risser-matela-lacroix-deschamps-pr%C3%A9sente-sa-liste-de-26-joueurs",
+      "published_utc": "2026-05-15T13:45:01+00:00",
+      "published_raw": "Fri, 15 May 2026 13:45:01 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-49554116ceed",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Burnham, Streeting, Rayner : qui sont les principaux prétendants à la succession de Keir Starmer ?",
+      "summary": "Alors que le Premier ministre britannique Keir Starmer est confronté à d'intenses pressions visant à le convaincre de quitter le pouvoir en raison des retombées de la déroute électorale historique enregistrée par le Labour ​lors des dernières élections locales, plusieurs prétendants à sa succession ont émergé jeudi. Parmi eux, le maire du Grand Manchester, le ministre démissionnaire de la Santé, ou encore l'ex-numéro deux du gouvernement.",
+      "link": "https://www.france24.com/fr/europe/20260515-burnham-streeting-rayner-qui-sont-les-principaux-pr%C3%A9tendants-%C3%A0-la-succession-de-keir-starmer",
+      "published_utc": "2026-05-15T13:42:47+00:00",
+      "published_raw": "Fri, 15 May 2026 13:42:47 GMT",
+      "language": "fr",
+      "tags": [
+        "Europe"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-396e34872855",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Spéciale Légendes Urbaines à Yopougon, en Côte d'Ivoire!",
+      "summary": "À l'occasion du MASA, le Marché des Arts et du Spectacle d'Abidjan, en Côte d'Ivoire, Légendes Urbaines investit la légendaire place Ficgayo de Yopougon pour une émission spéciale tournée en public avec de nombreux artistes. Ce plateau exceptionnel a réuni plus de 7500 personnes venues assister au spectacle de Dydy Yeman, TRK, Dopelym, Kadja, Suspect 95, Roseline Layo, Serge Beynaud, Yodé & Siro.",
+      "link": "https://www.france24.com/fr/%C3%A9missions/l%C3%A9gendes-urbaines/20260515-sp%C3%A9ciale-l%C3%A9gendes-urbaines-%C3%A0-yopougon-en-c%C3%B4te-d-ivoire",
+      "published_utc": "2026-05-15T13:42:17+00:00",
+      "published_raw": "Fri, 15 May 2026 13:42:17 GMT",
+      "language": "fr",
+      "tags": [
+        "Légendes urbaines"
+      ],
+      "author": "Juliette FIEVET"
+    },
+    {
+      "id": "france24_rss-9ceb39d67eb8",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Cap sur l'archipel des Bijagos, joyau insulaire de Guinée-Bissau",
+      "summary": "En Guinée-Bissau, l'Unesco a inscrit l'archipel des Bijagos sur la liste du Patrimoine mondial de l'humanité depuis quelques mois. Ces 88 îles situées dans l'Atlantique, au large de la capitale Bissau, sont connues pour leur biodiversité exceptionnelle et la richesse de leurs traditions. L'archipel abrite notamment la seule colonie d'hippopotames d'eau salée au monde.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-cap-sur-l-archipel-des-bijagos-joyau-insulaire-de-guin%C3%A9e-bissau",
+      "published_utc": "2026-05-15T13:36:37+00:00",
+      "published_raw": "Fri, 15 May 2026 13:36:37 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-5be9da3005f2",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Félix Bingui, \"le Chat\", figure du narcotrafic à Marseille, de nouveau face à la justice",
+      "summary": "Le procès du chef présumé du clan Yoda, Félix Bingui, débute lundi prochain à Marseille. Il est accusé, aux côtés de 19 coprévenus, de trafic de stupéfiants, d'association de malfaiteurs et de blanchiment.",
+      "link": "https://www.france24.com/fr/france/20260515-f%C3%A9lix-bingui-le-chat-figure-du-narcotrafic-%C3%A0-marseille-de-nouveau-face-%C3%A0-la-justice",
+      "published_utc": "2026-05-15T13:34:33+00:00",
+      "published_raw": "Fri, 15 May 2026 13:34:33 GMT",
+      "language": "fr",
+      "tags": [
+        "France"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-b8fc842cf836",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "RD Congo : le M23 accusé d'atrocités à Uvira",
+      "summary": "En République démocratique du Congo, Human Rights Watch accuse le groupe armé M23 et les Forces rwandaises d'exactions lors de la prise et l'occupation d'Uvira en décembre 2025. À la suite d'un rapport publié ce jeudi, l'Organisation de défense des droits de l'homme appelle les autorités congolaises à ouvrir une enquête dans les localités où le M23 s'est retiré cette semaine sous la pression américaine.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-rd-congo-le-m23-accus%C3%A9s-d-atrocit%C3%A9s-%C3%A0-uvira",
+      "published_utc": "2026-05-15T13:18:50+00:00",
+      "published_raw": "Fri, 15 May 2026 13:18:50 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-2225a3fe724c",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Sommet Donald Trump-Xi Jinping : dans les coulisses de la course mondiale à l'IA",
+      "summary": "Pour la première fois depuis 2017, les présidents américain et chinois, Donald Trump et Xi Jinping, se sont retrouvés à Pékin. Au menu des discussions : le commerce, la géopolitique, mais aussi l'intelligence artificielle. Washington veut garder sa suprématie, mais d'après l’Australian Strategic Policy Institute (ASPI), les Chinois ne cessent de gagner du terrain sur les technologies critiques. Déjà en avance sur les batteries électriques, Pékin s'impose dans les satellites, la cryptographie post-quantique et gagne en indépendance sur l'IA. Jusqu'où ?",
+      "link": "https://www.france24.com/fr/%C3%A9missions/tech-24/20260515-sommet-donald-trump-xi-jinping-dans-les-coulisses-de-la-course-mondiale-%C3%A0-l-ia",
+      "published_utc": "2026-05-15T13:12:22+00:00",
+      "published_raw": "Fri, 15 May 2026 13:12:22 GMT",
+      "language": "fr",
+      "tags": [
+        "Tech 24"
+      ],
+      "author": "Guillaume GRALLET"
+    },
+    {
+      "id": "france24_rss-1aa55aaa6ff5",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Trump quitte la Chine en revendiquant des accords commerciaux \"fantastiques\"",
+      "summary": "Donald Trump a quitté la Chine vendredi en revendiquant des accords commerciaux \"fantastiques\", mais sans signaler de percée sur des désaccords aux retombées globales comme la guerre avec l'Iran, à l'issue de deux jours de sommet avec son homologue Xi Jinping. Les précisions de Jean-Paul Tchang, économiste et spécialiste de la Chine.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-trump-quitte-la-chine-en-revendiquant-des-accords-commerciaux-fantastiques",
+      "published_utc": "2026-05-15T13:08:05+00:00",
+      "published_raw": "Fri, 15 May 2026 13:08:05 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-fa14c11be20c",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "RD Congo : victimes de braconnage, les bonobos menacés d'extinction",
+      "summary": "À Kinshasa, un sanctuaire dédié aux bonobos accueille et réhabilite des primates orphelins dont les parents sont victimes du braconnage. Originaire de la République démocratique du Congo, les bonobos ont vu leur population chuter d'environ 80 % au cours des dernières décennies et sont aujourd'hui menacés d'extinction.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-rd-congo-victimes-de-braconnage-les-bonobos-menac%C3%A9s-d-extinction",
+      "published_utc": "2026-05-15T13:06:11+00:00",
+      "published_raw": "Fri, 15 May 2026 13:06:11 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-ca18b586fb5c",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Tchad : les Patriotes, membre de l’ex-GCAP, dénoncent un climat politique tendu",
+      "summary": "Nouvelle alerte de l’opposition tchadienne sur l’état du climat politique dans le pays. En conférence de presse mercredi à N’Djamena, le parti Les Patriotes, membre de l’ex Groupe de concertation des acteurs politique, le GCAP, a dénoncé ce qu’il décrit comme un durcissement du pouvoir, sur fond de condamnations judiciaires visant plusieurs responsables politiques. Le mouvement évoque également une dégradation de la situation sécuritaire et des fractures communautaires croissantes.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-tchad-les-patriotes-membre-de-l-ex-gcap-d%C3%A9noncent-un-climat-politique-tendu",
+      "published_utc": "2026-05-15T12:58:21+00:00",
+      "published_raw": "Fri, 15 May 2026 12:58:21 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-6e9046181d70",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "L'Est de la RD Congo confronté à une nouvelle épidémie d'Ebola, quatre décès recensés",
+      "summary": "L'agence sanitaire de l'Union africaine a déclaré, vendredi, une nouvelle épidémie d'Ebola en RD Congo. Quatre décès et 246 cas ont été recensés dans la province d'Ituri, dans l'est, en proie aux violences depuis plus de 30 ans. L'organisme a convoqué une réunion d'urgence avec des représentants de la RD Congo, du Soudan du Sud et de l'Ouganda.",
+      "link": "https://www.france24.com/fr/afrique/20260515-l-est-de-la-rd-congo-confront%C3%A9-%C3%A0-une-nouvelle-%C3%A9pid%C3%A9mie-d-ebola-quatre-d%C3%A9c%C3%A8s-recens%C3%A9s",
+      "published_utc": "2026-05-15T12:05:11+00:00",
+      "published_raw": "Fri, 15 May 2026 12:05:11 GMT",
+      "language": "fr",
+      "tags": [
+        "Afrique"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-6482f4242828",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Challenge App Afrique : qui sont les 3 finalistes de la 10e édition ?",
+      "summary": "Les membres du jury du Challenge App Afrique ont sélectionné les trois finalistes de la dixième édition parmi plusieurs centaines de candidatures reçues.",
+      "link": "https://www.france24.com/fr/afrique/20260515-challenge-app-afrique-qui-sont-les-3-finalistes-de-la-10e-%C3%A9dition",
+      "published_utc": "2026-05-15T12:00:05+00:00",
+      "published_raw": "Fri, 15 May 2026 12:00:05 GMT",
+      "language": "fr",
+      "tags": [
+        "Afrique"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-de136cf5970f",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Saviez-vous que vos mèches coupées sauvent les océans et les forêts ?",
+      "summary": "Et si votre coupe de cheveux aidait à stopper une marée noire ? 95 % des cheveux sont incinérés alors qu'ils peuvent être recyclés. En France, 6 000 salons de coiffure les envoient à une entreprise qui leur donne une seconde vie. Boudins géants absorbeurs d'hydrocarbures ou tapis protecteurs de jeunes arbres de forêt...",
+      "link": "https://www.france24.com/fr/%C3%A9missions/%C3%A9l%C3%A9ment-terre-le-reportage/20260515-saviez-vous-que-vos-m%C3%A8ches-coup%C3%A9es-sauvent-les-oc%C3%A9ans-et-les-for%C3%AAts",
+      "published_utc": "2026-05-15T11:17:04+00:00",
+      "published_raw": "Fri, 15 May 2026 11:17:04 GMT",
+      "language": "fr",
+      "tags": [
+        "Élément Terre, le reportage"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-10761d774256",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Haïti : au moins 78 morts dans des affrontements entre gangs",
+      "summary": "Des affrontements entre gangs ont fait au moins 78 morts depuis le 9 mai dans les communes de Cité Soleil et de Croix-des-Bouquets, près de Port-au-Prince, selon l’ONU. Ces violences ont poussé plus de 5 000 personnes à fuir, alors qu’une nouvelle force multinationale est en cours de déploiement en Haïti.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-ha%C3%AFti-au-moins-78-morts-dans-des-affrontements-entre-gangs",
+      "published_utc": "2026-05-15T11:11:02+00:00",
+      "published_raw": "Fri, 15 May 2026 11:11:02 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-69a506b87daa",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "🔴 En direct : l'Iran autorise les navires de pays non belligérants à franchir le détroit d'Ormuz",
+      "summary": "",
+      "link": "https://www.france24.com/fr/moyen-orient/20260515-en-direct-moyen-orient-iran-donald-trump-perdre-patience-liban-israel-ormuz",
+      "published_utc": "2026-05-15T10:27:25+00:00",
+      "published_raw": "Fri, 15 May 2026 10:27:25 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-20c093e20e86",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "En Afrique du Sud, sur les traces de la chanteuse Tyla, devenue fierté nationale",
+      "summary": "Elle a récemment fait sensation au MET Gala et en couverture de Vogue. À seulement 24 ans, Tyla est déjà l’une des plus grandes artistes de la scène musicale mondiale. Son titre Water a dépassé les 9 milliards de vues sur TikTok. Qui est cette icône de la musique sud-africaine ?",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-en-afrique-du-sud-sur-les-traces-de-la-chanteuse-tyla-devenue-fiert%C3%A9-nationale",
+      "published_utc": "2026-05-15T10:06:07+00:00",
+      "published_raw": "Fri, 15 May 2026 10:06:07 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-2c6ccce9432d",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "RD Congo : des bonobos orphelins accueillis et soignés dans un sanctuaire à Kinshasa",
+      "summary": "À Kinshasa, un sanctuaire dédié aux bonobos accueille et réhabilite des primates orphelins dont les parents sont victimes du braconnage. Originaires de la République démocratique du Congo, les bonobos ont vu leur population chuter d’environ 80 % au cours des dernières décennies et sont aujourd’hui menacés d’extinction.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-rd-congo-des-bonobos-orphelins-accueillis-et-soign%C3%A9s-dans-un-sanctuaire-%C3%A0-kinshasa",
+      "published_utc": "2026-05-15T10:04:30+00:00",
+      "published_raw": "Fri, 15 May 2026 10:04:30 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-f709aad932d0",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Cap-Vert : l'accès à l’eau, enjeu central des élections législatives",
+      "summary": "Alors que les élections législatives, cruciales dans le régime politique cap-verdien, arrivent à grands pas, un défi de taille refait surface dans les attentes : celui de l’eau, éternel défi de l’archipel. Classé parmi les 15 pays avec la plus faible pluviométrie de la planète, le Cap-Vert a connu des décennies noires au XXe siècle, où les sécheresses à répétition ont entraîné famines et exodes massifs. La petite nation a depuis trouvé un fragile équilibre, mais les défis restent nombreux, notamment pour l’accès à l’eau et son coût, très élevé sur l’archipel.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-cap-vert-l-acc%C3%A8s-%C3%A0-l-eau-enjeu-central-des-%C3%A9lections-l%C3%A9gislatives",
+      "published_utc": "2026-05-15T10:01:16+00:00",
+      "published_raw": "Fri, 15 May 2026 10:01:16 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-4878834bb2c9",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "L'Ukraine marque une journée de deuil après un bombardement massif russe sur Kiev",
+      "summary": "Une journée de deuil a été décrétée, vendredi, par Kiev après des bombardements massifs ayant tué au moins 24 personnes, 48 heures seulement après la fin d'un cessez-le-feu entre l'Ukraine et la Russie. Les deux pays sont toutefois parvenus à échanger 205 prisonniers de guerre de chaque camp.",
+      "link": "https://www.france24.com/fr/europe/20260515-l-ukraine-marque-une-journ%C3%A9e-de-deuil-apr%C3%A8s-un-bombardement-massif-sur-kiev",
+      "published_utc": "2026-05-15T09:50:46+00:00",
+      "published_raw": "Fri, 15 May 2026 09:50:46 GMT",
+      "language": "fr",
+      "tags": [
+        "Europe"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-c5fd72c14a70",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Chine : comment Pékin veut se passer du soja américain",
+      "summary": "Le soja est au cœur des tensions commerciales entre les États-Unis et la Chine. Premier consommateur mondial de cet oléagineux, la Chine s’approvisionnait pendant des décennies principalement auprès de Washington. Mais en pleine guerre commerciale, Pékin a brutalement suspendu ses achats américains, leur préférant le soja brésilien. Objectif affiché à long terme : réduire sa dépendance et atteindre l’autosuffisance alimentaire.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-chine-comment-p%C3%A9kin-veut-se-passer-du-soja-am%C3%A9ricain",
+      "published_utc": "2026-05-15T09:47:17+00:00",
+      "published_raw": "Fri, 15 May 2026 09:47:17 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-e4be0044eb3f",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Haïti : affrontements entre gangs, au moins 78 morts depuis samedi selon l’ONU",
+      "summary": "Les affrontements violents entre plusieurs gangs dans la banlieue de la capitale haïtienne Port-au-Prince ont fait au moins 78 morts, dont 10 habitants non impliqués, depuis samedi, selon un bilan provisoire communiqué jeudi à l'AFP par le Bureau des Nations unies en Haïti (Binuh).",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-ha%C3%AFti-affrontements-entre-gangs-au-moins-78-morts-depuis-samedi-selon-l-onu",
+      "published_utc": "2026-05-15T09:43:10+00:00",
+      "published_raw": "Fri, 15 May 2026 09:43:10 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-490f7891ef38",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Liban : la perspective d’une paix avec Israël divise",
+      "summary": "Au Liban, l’idée même d’une paix avec Israël continue de profondément diviser. Alors que des négociations inédites s’ouvrent ce jeudi à Washington sous médiation américaine, une partie des Libanais y voit l’espoir d’un retour à la stabilité après des années de crise et de tensions. Mais du côté du Hezbollah, toute perspective de normalisation avec l’État hébreu reste catégoriquement rejetée.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260515-liban-la-perspective-d-une-paix-avec-isra%C3%ABl-divise",
+      "published_utc": "2026-05-15T09:40:06+00:00",
+      "published_raw": "Fri, 15 May 2026 09:40:06 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    }
+  ]
+}

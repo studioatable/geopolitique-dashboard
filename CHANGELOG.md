@@ -52,9 +52,24 @@ Catégories d'entrées : `Ajouté` (Added), `Modifié` (Changed), `Déprécié` 
 
 ---
 
+## [0.3.0] — 2026-05-15 — Ingestion France 24 RSS (étape 3)
+
+### Ajouté
+
+- `ingestion/france24.py` — module d'ingestion du flux RSS France 24. Télécharge le XML brut, parse via `feedparser`, normalise en JSON conforme à un schéma commun (id, source, titre, résumé, lien, dates UTC + brut, langue, tags, auteur).
+- `feedparser>=6.0,<7.0` ajouté à `requirements.txt` — parser RSS/Atom standard, robuste aux flux légèrement non conformes.
+- Schéma de sortie commun documenté dans le script (`schema_version: 1.0.0`), réutilisable pour les futurs modules d'ingestion RSS (UN News, France 24 alternatif, Le Monde, etc.).
+
+### Choix techniques
+
+- **Brut écrasé à chaque exécution** (`data/raw/france24-latest.xml`) plutôt que versionnement horodaté, par sobriété. L'historique est tenu par Git via les commits horarires/quotidiens. Évolution possible en v1.1+ si la traçabilité fine devient utile.
+- **JSON normalisé toujours dans `data/rss/france24.json`** (toujours la version la plus récente), pour intégration directe par le frontend en étape 6.
+- IDs d'items stables (hash du link/guid) pour permettre dédoublonnage à venir entre exécutions successives.
+
+---
+
 ## Prochaines versions prévues (roadmap Phase 2)
 
-- `0.3.0` — Ingestion AFP RSS (étape 3)
 - `0.4.0` — Ingestion SIPRI MILEX (étape 4)
 - `0.5.0` — Fond de carte Natural Earth (étape 5)
 - `0.6.0` — Première page carte mondiale + flux RSS (étape 6)

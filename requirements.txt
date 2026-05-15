@@ -3,3 +3,4 @@
 # Versions épinglées pour reproductibilité (mises à jour passées au crible audit avant bump).
 
 requests>=2.31,<3.0
+feedparser>=6.0,<7.0
