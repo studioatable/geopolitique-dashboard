@@ -69,6 +69,7 @@ SHEET_TARGETS = [
     {
         "indicator_id": "milex_constant_usd",
         "unit": "USD constants (millions)",
+        "value_multiplier": 1.0,
         "name_alternatives": [
             ["constant", "us$"],  # ex. "Constant (2024) US$"
             ["constant", "usd"],
@@ -77,6 +78,10 @@ SHEET_TARGETS = [
     {
         "indicator_id": "milex_pct_gdp",
         "unit": "% du PIB",
+        # SIPRI stocke "Share of GDP" en ratio décimal (0,0194 = 1,94 %).
+        # On multiplie par 100 pour que la valeur dans le JSON soit déjà
+        # exprimée en pourcentage humain (1,94), conforme à l'unité.
+        "value_multiplier": 100.0,
         "name_alternatives": [
             ["share", "gdp"],     # ex. "Share of GDP"
             ["% of gdp"],
@@ -191,6 +196,7 @@ def extract_sheet(ws, indicator: dict) -> dict:
     """Extrait les données d'une feuille selon la grammaire SIPRI :
     colonne A = pays, colonnes suivantes = années."""
     header_row, year_cols, years = find_header_row(ws)
+    multiplier = float(indicator.get("value_multiplier", 1.0))
 
     countries_data: dict[str, dict[str, float]] = {}
     for row_idx in range(header_row + 1, ws.max_row + 1):
@@ -204,7 +210,7 @@ def extract_sheet(ws, indicator: dict) -> dict:
             value = ws.cell(row=row_idx, column=col_idx).value
             if not is_data_value(value):
                 continue
-            year_data[str(year)] = round(float(value), 6)
+            year_data[str(year)] = round(float(value) * multiplier, 6)
 
         if year_data:
             countries_data[country_name] = year_data
@@ -212,6 +218,7 @@ def extract_sheet(ws, indicator: dict) -> dict:
     return {
         "indicator_id": indicator["indicator_id"],
         "unit": indicator["unit"],
+        "value_multiplier_applied": multiplier,
         "years_min": min(years) if years else None,
         "years_max": max(years) if years else None,
         "countries_count": len(countries_data),

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Géopolitique — Tableau de bord interactif | Studio à Table</title>
+  <meta name="description" content="Suivi en temps réel des conflits, dépenses militaires et actualités géopolitiques. Sources qualifiées et méthodologie transparente." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Police Lora (serif, titres) + DM Sans (sans-serif, corps) — charte SAT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- MapLibre GL JS via CDN -->
+  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ======================================================================
+       HEADER : logo SAT + titre du dashboard + menu de navigation
+       ====================================================================== -->
+  <header class="app-header">
+    <a href="https://studioatable.fr" class="logo-link" target="_blank" rel="noopener">
+      <!-- Logo placeholder SVG (à remplacer par logo-blanc-complet.png en base64
+           via scripts/encode_logos.py) -->
+      <svg class="logo-placeholder" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg" aria-label="Studio à Table">
+        <text x="0" y="28" font-family="Lora, serif" font-weight="700" font-size="22" fill="#FFFFFF">Studio à Table</text>
+        <line x1="0" y1="34" x2="200" y2="34" stroke="#62D0FF" stroke-width="2" />
+      </svg>
+    </a>
+    <div class="app-title">
+      <h1>Géopolitique <span class="version-tag">v0.6.1</span></h1>
+      <p class="subtitle">Suivi des conflits, dépenses militaires et actualités</p>
+    </div>
+    <nav class="app-nav" aria-label="Navigation principale">
+      <a href="index.html" class="nav-link active">Carte</a>
+      <a href="#" class="nav-link disabled" aria-disabled="true" title="Disponible en v0.7.0">Conflits</a>
+      <a href="about.html" class="nav-link">À propos</a>
+    </nav>
+  </header>
+
+  <!-- ======================================================================
+       MAIN : carte mondiale + sidebar RSS
+       ====================================================================== -->
+  <main class="app-main">
+
+    <section class="map-section" aria-label="Carte mondiale interactive">
+
+      <!-- Sélecteur d'indicateur, en surimpression sur la carte -->
+      <div class="indicator-selector" role="group" aria-label="Choisir l'indicateur affiché">
+        <button data-indicator="none" class="indicator-btn active" type="button">
+          Aucun
+          <span class="indicator-hint">Frontières seules</span>
+        </button>
+        <button data-indicator="milex_constant_usd" class="indicator-btn" type="button">
+          Dépenses militaires
+          <span class="indicator-hint">USD constants 2024, 2025</span>
+        </button>
+        <button data-indicator="milex_pct_gdp" class="indicator-btn" type="button">
+          % du PIB
+          <span class="indicator-hint">Dépenses militaires / PIB, 2025</span>
+        </button>
+      </div>
+
+      <!-- Conteneur MapLibre -->
+      <div id="map" role="application" aria-label="Carte du monde Mercator"></div>
+
+      <!-- Tooltip flottant (affiché par JS au clic sur un pays) -->
+      <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+
+      <!-- Légende et état de chargement -->
+      <div class="legend" id="legend" hidden>
+        <div class="legend-title" id="legend-title"></div>
+        <div class="legend-scale" id="legend-scale"></div>
+        <div class="legend-source" id="legend-source"></div>
+      </div>
+
+      <div id="loading" class="loading">
+        <p>Chargement de la carte et des sources…</p>
+      </div>
+
+    </section>
+
+    <aside class="rss-sidebar" aria-label="Flux d'actualités France 24">
+      <div class="rss-header">
+        <h2>Actualités</h2>
+        <p class="rss-meta" id="rss-meta">Chargement…</p>
+      </div>
+      <ol class="rss-list" id="rss-list" aria-live="polite"></ol>
+    </aside>
+
+  </main>
+
+  <!-- ======================================================================
+       FOOTER minifié — méthodologie complète déplacée sur about.html
+       ====================================================================== -->
+  <footer class="app-footer minimal">
+    <div class="footer-bottom">
+      <span>© Studio à Table · <a href="https://studioatable.fr" target="_blank" rel="noopener">studioatable.fr</a> · <a href="about.html">À propos &amp; méthodologie</a></span>
+      <span class="version-info">v0.6.1 · MVP Phase 2</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

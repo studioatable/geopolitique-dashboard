@@ -158,6 +158,25 @@ def pick_property(props: dict, candidates: list[str]) -> Optional[str]:
     return None
 
 
+def pick_numeric(props: dict, candidates: list[str]) -> Optional[float]:
+    """Variante numérique de pick_property : accepte 0 comme valeur valide
+    et tente une conversion en float. Retourne None si rien d'utilisable.
+
+    Indispensable pour labelrank/scalerank où 0 est la valeur la plus
+    importante et ne doit pas être traitée comme "absente"."""
+    lc_props = {k.lower(): v for k, v in props.items()}
+    for candidate in candidates:
+        if candidate.lower() in lc_props:
+            value = lc_props[candidate.lower()]
+            if value is None or value == "":
+                continue
+            try:
+                return float(value)
+            except (TypeError, ValueError):
+                continue
+    return None
+
+
 def normalize_properties(props: dict) -> dict:
     """Réduit les propriétés à celles utiles au front, en absorbant les
     variations de casse de Natural Earth."""
@@ -168,6 +187,9 @@ def normalize_properties(props: dict) -> dict:
         "name_fr": pick_property(props, ["name_fr"]),
         "continent": pick_property(props, ["continent"]),
         "subregion": pick_property(props, ["subregion"]),
+        # labelrank : importance du label (Natural Earth, 0 = majeur,
+        # 12 = mineur). Sert au filtrage par zoom dans l'app frontend.
+        "labelrank": pick_numeric(props, ["labelrank", "label_rank"]),
     }
 
 

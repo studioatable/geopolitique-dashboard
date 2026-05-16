@@ -52,6 +52,70 @@ Catégories d'entrées : `Ajouté` (Added), `Modifié` (Changed), `Déprécié` 
 
 ---
 
+## [0.6.2] — 2026-05-15 — Lisibilité des labels au zoom + fix unité % PIB
+
+### Corrigé
+
+- **Unité `% du PIB`** : SIPRI stocke "Share of GDP" comme ratio décimal (0,0194). Le JSON normalisé renvoyait donc `0,02 %` pour la France au lieu de `1,94 %`. Correction en amont (ingestion) via un nouveau paramètre `value_multiplier` dans `SHEET_TARGETS` du script `ingestion/sipri_milex.py`. Le JSON et l'affichage portent désormais des pourcentages humains.
+
+### Ajouté
+
+- **Lisibilité des étiquettes au zoom** : taille de police adaptative (9 px à zoom 1, 14 px à zoom 5+) ET filtrage par importance Natural Earth (`labelrank`). Au zoom mondial, seuls les ~20 pays majeurs portent une étiquette ; au zoom continental, ~50 ; au zoom régional, tous. Évite le chevauchement à l'ouverture du dashboard.
+- Propriété `labelrank` désormais conservée dans `site/data/world.geojson` (cf. mise à jour `ingestion/naturalearth.py`).
+- Fonction utilitaire `pick_numeric()` dans `ingestion/naturalearth.py` pour récupérer les valeurs numériques Natural Earth en gérant correctement la valeur `0`.
+
+---
+
+## [0.6.1] — 2026-05-15 — Correctifs UX (EUR, RSS pays, labels, About)
+
+### Ajouté
+
+- **Conversion EUR** affichée à côté de USD dans le tooltip SIPRI USD constants (taux moyen 2024 BCE = 0,924 EUR/USD). Note méthodologique dans `about.html`.
+- **Étiquettes des pays** affichées directement sur la carte via markers HTML positionnés au centroïde de chaque polygone Natural Earth. Markers grisés en italique rouge pour les territoires disputés.
+- **Filtre RSS par pays** : un clic sur un pays filtre les dépêches France 24 dont le titre ou résumé contient le nom du pays (FR ou EN) ou un alias enrichi (Moscou, Poutine, Téhéran, etc., pour ~20 pays clés). Lien "tout afficher" pour annuler le filtre. Clic dans l'océan = retour aux 25 dernières dépêches globales.
+- **Page `about.html`** dédiée méthodologie, sources, convention cartographique, conversion EUR, note de transparence et licence. Lien depuis le footer minimisé.
+- **Menu de navigation** dans le header : `Carte · Conflits (à venir v0.7.0) · À propos`.
+- **Traductions FR** des continents Natural Earth (Africa → Afrique, etc.) et des sous-régions (Western Europe → Europe de l'Ouest, etc.). Tooltip affiche désormais "France · Europe · Europe de l'Ouest" plutôt que "France · Europe · Western Europe".
+- Table d'alias `COUNTRY_NAME_FR` côté JS pour traduire ~80 noms de pays principaux quand Natural Earth ne fournit pas `name_fr`.
+
+### Modifié
+
+- **Footer minimisé** : copyright + version + lien "À propos & méthodologie" + lien `studioatable.fr`. Tout le contenu méthodologique migré vers `about.html`. La carte gagne ~120 pixels verticaux.
+- `.env.example` : `ACLED_API_KEY` retiré (ACLED a migré vers authentification de session Drupal), remplacé par `ACLED_EMAIL` + `ACLED_PASSWORD`.
+
+### Notes
+
+- Performance markers HTML pour les 177 pays Natural Earth 110m : impact négligeable. Si bascule future vers 1:10m (~5000 features), prévoir une couche `symbol` MapLibre avec glyphs CDN.
+- Le clic sur l'océan ferme le tooltip ET le filtre RSS — cohérent avec une logique "désélection".
+
+---
+
+## [0.6.0] — 2026-05-15 — Première page carte mondiale + RSS (étape 6)
+
+### Ajouté
+
+- `site/index.html` — structure de la page (header SAT, sélecteur d'indicateur, conteneur MapLibre, sidebar RSS, footer transparence).
+- `site/style.css` — feuille de style alignée sur la palette SAT (variables CSS de la charte), typographie Lora + DM Sans via Google Fonts, layout grid carte+sidebar fixe.
+- `site/app.js` — initialisation MapLibre GL JS, chargement parallèle des 3 sources (Natural Earth, SIPRI, France 24 RSS), jointure SIPRI↔Natural Earth par nom de pays + table d'alias minimale, sélecteur 3 modes (aucun / USD constants / % PIB), tooltip flottant au clic avec note de territoire disputé si applicable, sidebar RSS (top 25 dépêches).
+- `scripts/encode_logos.py` — utilitaire pour encoder les logos SAT (`logo-blanc-complet.png`, `logo-150.png`) en base64 et générer le fragment HTML à substituer dans `index.html`. Logos non encore intégrés (sandbox Claude indisponible) — placeholder SVG en attendant.
+
+### Choix techniques
+
+- **MapLibre GL JS 4.7.1** via CDN unpkg. Pas de fonds de carte externes (tuiles satellites/OSM/Mapbox) — uniquement les polygones Natural Earth en local. Projection Mercator par défaut.
+- **Style MapLibre minimaliste** défini en pur JSON, 5 couches : background + countries-fill (choroplèthe) + countries-border + countries-disputed (bordure rouge SAT pointillée) + countries-hover.
+- **Joining SIPRI↔Natural Earth par nom anglais**, avec table d'alias `COUNTRY_NAME_ALIASES` (USA, Russia, Czechia, Türkiye, Côte d'Ivoire, etc.). Les pays non matchés sont loggés en console pour traçabilité (méthodologie charte § II.6).
+- **Sélecteur 3 modes** : "Aucun" par défaut (frontières seules, conformément au choix utilisateur "carte neutre au départ"), "Dépenses militaires USD", "% du PIB". Légende dynamique en bas à gauche.
+- **Tooltip au clic** (pas au hover) : 280px max, position adaptative, badge "Statut disputé" en bordure rouge si applicable, source en bas de tooltip.
+- **Logo placeholder SVG** : texte stylisé Lora + soulignement cyan, à remplacer par les vrais logos PNG en base64 via `scripts/encode_logos.py`.
+
+### Notes
+
+- Indexation `noindex, nofollow` dans le `<head>` pour ne pas exposer le MVP aux moteurs avant validation finale (étape 10).
+- Note de transparence applicative inscrite dans le footer, conforme à la charte § XIII.
+- Convention cartographique v1.0 (Natural Earth + marqueurs disputés) explicite dans le footer.
+
+---
+
 ## [0.5.0] — 2026-05-15 — Fond de carte Natural Earth (étape 5)
 
 ### Ajouté
@@ -115,7 +179,6 @@ Catégories d'entrées : `Ajouté` (Added), `Modifié` (Changed), `Déprécié` 
 
 ## Prochaines versions prévues (roadmap Phase 2)
 
-- `0.6.0` — Première page carte mondiale + flux RSS (étape 6)
 - `0.7.0` — Déploiement sur `geopolitique.studioatable.fr` (étape 7)
 - `0.8.0` — Cron serveur SAT actif (étape 8)
 - `0.9.0` — Ingestion ACLED + couche événements (étape 9)

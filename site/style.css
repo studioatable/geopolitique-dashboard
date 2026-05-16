@@ -1,0 +1,673 @@
+/* ============================================================================
+   Géopolitique Dashboard — Studio à Table
+   Feuille de style v0.6.0
+   Palette et typographie alignées sur la charte de marque SAT.
+   ============================================================================ */
+
+:root {
+  /* === Palette SAT (charte applicative § V) === */
+  --sat-blue-deep:    #053144;
+  --sat-blue-strong:  #0678B7;
+  --sat-blue-light:   #62D0FF;
+  --sat-blue-accent:  #40C6FF;
+  --sat-text:         #333333;
+  --sat-text-contrast: rgba(0, 0, 0, 0.77);
+  --sat-text-muted:   #54595F;
+  --sat-red:          #BC534F;
+  --sat-bg-soft:      #FAFAFA;
+  --sat-bg-light:     #F3F3F3;
+  --sat-border:       #E7E2E2;
+  --sat-gray:         #454545;
+  --sat-white:        #FFFFFF;
+  --sat-black:        #000000;
+
+  /* === Typographie === */
+  --font-serif: 'Lora', Georgia, serif;
+  --font-sans:  'DM Sans', system-ui, -apple-system, sans-serif;
+
+  /* === Espacements et tailles === */
+  --header-height: 64px;
+  --sidebar-width: 360px;
+  --footer-padding: 32px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --shadow-soft: 0 2px 12px rgba(5, 49, 68, 0.12);
+  --shadow-strong: 0 4px 24px rgba(5, 49, 68, 0.24);
+}
+
+/* ============================================================================
+   Reset et base
+   ============================================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--sat-bg-soft);
+  color: var(--sat-text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--sat-blue-strong);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover,
+a:focus {
+  color: var(--sat-blue-accent);
+  text-decoration: underline;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  color: var(--sat-blue-deep);
+  margin: 0;
+  font-weight: 700;
+}
+
+/* ============================================================================
+   Header
+   ============================================================================ */
+
+.app-header {
+  height: var(--header-height);
+  background: var(--sat-blue-deep);
+  color: var(--sat-white);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 24px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-soft);
+}
+
+/* Menu navigation header */
+.app-nav {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+}
+
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.78);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  background: rgba(98, 208, 255, 0.15);
+  color: var(--sat-blue-light);
+  text-decoration: none;
+}
+
+.nav-link.active {
+  background: var(--sat-blue-strong);
+  color: var(--sat-white);
+}
+
+.nav-link.disabled {
+  color: rgba(255, 255, 255, 0.35);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.logo-link {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.logo-placeholder {
+  height: 40px;
+  width: auto;
+}
+
+.app-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.app-title h1 {
+  color: var(--sat-white);
+  font-size: 20px;
+  line-height: 1.1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.version-tag {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--sat-blue-strong);
+  color: var(--sat-white);
+  padding: 2px 8px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 12px;
+  color: var(--sat-blue-light);
+  font-weight: 400;
+}
+
+/* ============================================================================
+   Main (carte + sidebar)
+   ============================================================================ */
+
+.app-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr var(--sidebar-width);
+  min-height: 0;
+}
+
+.map-section {
+  position: relative;
+  background: var(--sat-bg-light);
+  overflow: hidden;
+}
+
+#map {
+  width: 100%;
+  height: 100%;
+  background: var(--sat-bg-light);
+}
+
+/* ============================================================================
+   Sélecteur d'indicateur (surimpression carte)
+   ============================================================================ */
+
+.indicator-selector {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  background: var(--sat-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-strong);
+  padding: 6px;
+  display: flex;
+  gap: 4px;
+  max-width: calc(100% - 32px);
+}
+
+.indicator-btn {
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sat-text);
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 140px;
+}
+
+.indicator-btn:hover,
+.indicator-btn:focus {
+  background: var(--sat-bg-light);
+  color: var(--sat-blue-strong);
+  outline: none;
+}
+
+.indicator-btn.active {
+  background: var(--sat-blue-strong);
+  color: var(--sat-white);
+}
+
+.indicator-btn.active .indicator-hint {
+  color: var(--sat-blue-light);
+}
+
+.indicator-hint {
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--sat-text-muted);
+  letter-spacing: 0.2px;
+}
+
+/* ============================================================================
+   Légende (affichée quand un indicateur est sélectionné)
+   ============================================================================ */
+
+.legend {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 9;
+  background: var(--sat-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-strong);
+  padding: 12px 16px;
+  min-width: 240px;
+  max-width: 320px;
+}
+
+.legend-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--sat-blue-deep);
+  margin-bottom: 8px;
+}
+
+.legend-scale {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--sat-text);
+  margin-bottom: 6px;
+}
+
+.legend-scale-bar {
+  flex: 1;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(
+    to right,
+    var(--sat-bg-light) 0%,
+    var(--sat-blue-light) 50%,
+    var(--sat-blue-deep) 100%
+  );
+  border: 1px solid var(--sat-border);
+}
+
+.legend-source {
+  font-size: 10px;
+  color: var(--sat-text-muted);
+  font-style: italic;
+}
+
+/* ============================================================================
+   Tooltip (au clic sur un pays)
+   ============================================================================ */
+
+.tooltip {
+  position: absolute;
+  z-index: 11;
+  background: var(--sat-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-strong);
+  padding: 12px 16px;
+  max-width: 280px;
+  pointer-events: none;
+  font-size: 13px;
+  line-height: 1.4;
+  border-top: 3px solid var(--sat-blue-strong);
+}
+
+.tooltip[data-disputed="true"] {
+  border-top-color: var(--sat-red);
+}
+
+.tooltip h4 {
+  margin: 0 0 4px 0;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--sat-blue-deep);
+}
+
+.tooltip .tooltip-meta {
+  font-size: 11px;
+  color: var(--sat-text-muted);
+  margin-bottom: 8px;
+}
+
+.tooltip .tooltip-value {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--sat-blue-strong);
+  margin: 4px 0;
+}
+
+.tooltip .tooltip-unit {
+  font-size: 11px;
+  color: var(--sat-text-muted);
+  font-weight: 400;
+}
+
+.tooltip .value-secondary {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--sat-text-muted);
+  margin-left: 4px;
+}
+
+.tooltip .tooltip-disputed {
+  margin-top: 8px;
+  padding: 8px;
+  background: rgba(188, 83, 79, 0.08);
+  border-left: 3px solid var(--sat-red);
+  font-size: 11px;
+  color: var(--sat-text-contrast);
+  line-height: 1.4;
+}
+
+.tooltip .tooltip-source {
+  margin-top: 8px;
+  font-size: 10px;
+  color: var(--sat-text-muted);
+  font-style: italic;
+}
+
+/* ============================================================================
+   Chargement
+   ============================================================================ */
+
+.loading {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 49, 68, 0.92);
+  color: var(--sat-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  font-family: var(--font-serif);
+  font-size: 16px;
+}
+
+.loading.hidden {
+  display: none;
+}
+
+/* ============================================================================
+   Sidebar RSS
+   ============================================================================ */
+
+.rss-sidebar {
+  background: var(--sat-white);
+  border-left: 1px solid var(--sat-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.rss-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--sat-border);
+  background: var(--sat-bg-soft);
+  flex-shrink: 0;
+}
+
+.rss-header h2 {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.rss-meta {
+  font-size: 11px;
+  color: var(--sat-text-muted);
+  margin: 0;
+}
+
+.rss-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.rss-item {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--sat-border);
+  transition: background 0.15s ease;
+}
+
+.rss-item:hover {
+  background: var(--sat-bg-soft);
+}
+
+.rss-item a {
+  color: var(--sat-blue-deep);
+  font-weight: 500;
+  font-size: 13.5px;
+  line-height: 1.35;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.rss-item a:hover {
+  color: var(--sat-blue-strong);
+  text-decoration: none;
+}
+
+.rss-item .rss-summary {
+  font-size: 12px;
+  color: var(--sat-text-muted);
+  line-height: 1.45;
+  margin: 0 0 6px 0;
+  /* Tronquer à 3 lignes */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rss-item .rss-date {
+  font-size: 10px;
+  color: var(--sat-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* ============================================================================
+   Footer (version minimale)
+   ============================================================================ */
+
+.app-footer {
+  background: var(--sat-blue-deep);
+  color: var(--sat-white);
+  padding: 12px 24px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  flex-shrink: 0;
+}
+
+.app-footer.minimal .footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.app-footer a {
+  color: var(--sat-blue-light);
+}
+
+.app-footer a:hover {
+  color: var(--sat-white);
+}
+
+.version-info {
+  font-family: var(--font-sans);
+  letter-spacing: 0.4px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* ============================================================================
+   Étiquettes pays sur la carte (markers HTML)
+   ============================================================================ */
+
+.country-label {
+  font-family: var(--font-sans);
+  /* Taille pilotée par JS via --label-size (cf. updateLabelVisibility) */
+  font-size: var(--label-size, 11px);
+  font-weight: 500;
+  color: var(--sat-text-contrast);
+  text-shadow:
+    0 0 3px rgba(255, 255, 255, 0.9),
+    0 0 2px rgba(255, 255, 255, 0.9),
+    0 0 1px rgba(255, 255, 255, 1);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: 0.1px;
+  transition: font-size 0.15s ease;
+}
+
+.country-label.disputed {
+  color: var(--sat-red);
+  font-style: italic;
+}
+
+/* ============================================================================
+   Page À propos
+   ============================================================================ */
+
+.about-main {
+  flex: 1;
+  background: var(--sat-bg-soft);
+  padding: 32px 24px;
+  overflow-y: auto;
+}
+
+.about-content {
+  max-width: 820px;
+  margin: 0 auto;
+  background: var(--sat-white);
+  border: 1px solid var(--sat-border);
+  border-radius: var(--radius-md);
+  padding: 32px 40px;
+  box-shadow: var(--shadow-soft);
+}
+
+.about-content h2 {
+  font-size: 20px;
+  margin: 28px 0 12px 0;
+  color: var(--sat-blue-deep);
+  border-bottom: 2px solid var(--sat-blue-light);
+  padding-bottom: 6px;
+}
+
+.about-content h2:first-child {
+  margin-top: 0;
+}
+
+.about-content p {
+  color: var(--sat-text);
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.about-content ul,
+.about-content ol {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--sat-text);
+  margin: 0 0 16px 0;
+  padding-left: 22px;
+}
+
+.about-content li {
+  margin-bottom: 6px;
+}
+
+.about-content code {
+  background: var(--sat-bg-light);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 12.5px;
+  color: var(--sat-blue-strong);
+}
+
+.sources-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 20px 0;
+  font-size: 13px;
+}
+
+.sources-table th,
+.sources-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--sat-border);
+}
+
+.sources-table th {
+  background: var(--sat-bg-light);
+  font-weight: 700;
+  color: var(--sat-blue-deep);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+.muted {
+  font-size: 12.5px !important;
+  color: var(--sat-text-muted) !important;
+  font-style: italic;
+}
+
+.transparency-note {
+  background: var(--sat-bg-light);
+  border-left: 3px solid var(--sat-blue-strong);
+  padding: 12px 16px;
+  font-size: 13px !important;
+  margin: 12px 0 !important;
+}
+
+.back-link {
+  margin-top: 32px !important;
+  padding-top: 16px;
+  border-top: 1px solid var(--sat-border);
+  font-size: 14px !important;
+}
+
+/* ============================================================================
+   Responsive : pour MVP desktop-first, on n'optimise pas le mobile.
+   On dégrade proprement à partir de ~1024px (sidebar plus étroite).
+   ============================================================================ */
+
+@media (max-width: 1280px) {
+  :root {
+    --sidebar-width: 300px;
+  }
+  .indicator-btn {
+    min-width: 120px;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}

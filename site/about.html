@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>À propos &amp; méthodologie — Géopolitique | Studio à Table</title>
+  <meta name="description" content="Méthodologie, sources qualifiées, convention cartographique et note de transparence du tableau de bord géopolitique Studio à Table." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="app-header">
+    <a href="https://studioatable.fr" class="logo-link" target="_blank" rel="noopener">
+      <svg class="logo-placeholder" viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg" aria-label="Studio à Table">
+        <text x="0" y="28" font-family="Lora, serif" font-weight="700" font-size="22" fill="#FFFFFF">Studio à Table</text>
+        <line x1="0" y1="34" x2="200" y2="34" stroke="#62D0FF" stroke-width="2" />
+      </svg>
+    </a>
+    <div class="app-title">
+      <h1>Géopolitique <span class="version-tag">v0.6.1</span></h1>
+      <p class="subtitle">Suivi des conflits, dépenses militaires et actualités</p>
+    </div>
+    <nav class="app-nav" aria-label="Navigation principale">
+      <a href="index.html" class="nav-link">Carte</a>
+      <a href="#" class="nav-link disabled" aria-disabled="true" title="Disponible en v0.7.0">Conflits</a>
+      <a href="about.html" class="nav-link active">À propos</a>
+    </nav>
+  </header>
+
+  <main class="about-main">
+    <article class="about-content">
+
+      <h2>À propos du projet</h2>
+      <p>
+        Ce tableau de bord vise à <strong>mesurer et rendre intelligibles les dynamiques géopolitiques</strong>
+        — conflits armés, dépenses militaires, actualités, indicateurs de risque — à partir de sources de
+        référence indépendantes et qualifiées. La vocation première est le suivi des conflits dans le monde
+        ; les indicateurs économiques et militaires complètent la lecture stratégique.
+      </p>
+      <p>
+        Projet porté par <a href="https://studioatable.fr" target="_blank" rel="noopener">Studio à Table</a>,
+        agence de stratégie de marque et de communication basée dans le Gers. Développement par Yvan Gapin,
+        avec l'appui de Claude (Anthropic) pour l'architecture logicielle, l'ingestion des données et la
+        construction des visualisations.
+      </p>
+
+      <h2>Méthodologie</h2>
+      <p>
+        Les sources sont qualifiées selon une grille de six critères inscrite dans la
+        <em>charte applicative</em> du projet :
+      </p>
+      <ol>
+        <li><strong>Type de source</strong> — institution multilatérale, académique peer-reviewed, ONG établie, agence étatique, média de référence, think tank, agrégateur algorithmique</li>
+        <li><strong>Indépendance</strong> — la source mesure-t-elle elle-même ou cite-t-elle ? Quel agenda politique ou commercial ?</li>
+        <li><strong>Méthodologie publique</strong> — peut-on lire, comprendre et critiquer la méthode ?</li>
+        <li><strong>Données primaires ou secondaires</strong></li>
+        <li><strong>Antériorité</strong> — depuis combien d'années la source travaille rigoureusement le sujet ?</li>
+        <li><strong>Reproductibilité et fréquence</strong></li>
+      </ol>
+      <p>
+        Chaque source porte une note d'étoiles (★ à ★★★★★) reflétant l'équilibre des six critères.
+        Toute donnée affichée mentionne sa source et sa date de mesure. Aucune homogénéisation forcée entre
+        sources divergentes : quand deux sources divergent, l'interface l'indique.
+      </p>
+
+      <h2>Sources actives en v0.6.1</h2>
+      <table class="sources-table">
+        <thead>
+          <tr><th>Source</th><th>Catégorie</th><th>Cadence</th><th>Note</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a href="https://www.sipri.org/databases/milex" target="_blank" rel="noopener">SIPRI MILEX</a></td><td>Dépenses militaires (USD constants + % PIB)</td><td>Annuelle (avril)</td><td>★★★★</td></tr>
+          <tr><td><a href="https://www.france24.com/fr/rss" target="_blank" rel="noopener">France 24 RSS</a></td><td>Actualités internationales francophones</td><td>Temps réel</td><td>★★★</td></tr>
+          <tr><td><a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener">Natural Earth</a></td><td>Fond de carte vectoriel 1:110m</td><td>Statique</td><td>★★★★★</td></tr>
+        </tbody>
+      </table>
+      <p class="muted">
+        Sources prévues en v0.7.0+ : ACLED (★★★★, conflits temps réel), UCDP (★★★★★, conflits académique),
+        UN News (★★★★, actualités ONU), PRIO (★★★★★, recherche conflits). Voir
+        <code>docs/sources_a_integrer.md</code> dans le dépôt pour le détail.
+      </p>
+
+      <h2>Convention cartographique</h2>
+      <p>
+        Le projet adopte une convention explicite et documentée plutôt que de prétendre à une neutralité
+        absolue (qui n'existe pas en cartographie).
+      </p>
+      <ul>
+        <li><strong>v1.0 — Natural Earth par défaut.</strong> Les territoires disputés portent un marqueur visuel (bordure rouge pointillée) et une note explicative au clic : Sahara occidental, Taïwan, Kosovo, Palestine, Israël.</li>
+        <li><strong>v1.1 — Couche ONU strict commutable.</strong> L'utilisateur pourra basculer sur la vue conforme aux résolutions du Conseil de sécurité (Crimée = Ukraine, Sahara occidental = territoire non autonome, Taïwan = République populaire de Chine, Kosovo = non reconnu).</li>
+        <li><strong>v1.2 — Couche « contrôle effectif » commutable.</strong> Vue reflétant le contrôle administratif réel des territoires (Crimée = Russie de facto, etc.).</li>
+      </ul>
+      <p>
+        <strong>Limites de la résolution 1:110m :</strong> Crimée et Cachemire ne sont pas des features
+        distinctes à cette échelle. Ils seront signalés par infobulle UI dans l'évolution v0.7.0+. Une
+        résolution supérieure (1:50m, 1:10m) sera proposée pour les zooms régionaux.
+      </p>
+
+      <h2>Projection cartographique</h2>
+      <p>
+        La carte utilise une projection <strong>Mercator</strong> par défaut (la plus performante côté
+        rendu MapLibre GL JS). Cette projection a des biais connus : la Russie et le Groenland paraissent
+        démesurés, l'Afrique sous-représentée. Une projection équivalente (Equal Earth) sera proposée
+        en option dans une version ultérieure, conformément au principe charte d'anticipation des biais
+        cartographiques.
+      </p>
+
+      <h2>Honnêteté épistémique</h2>
+      <p>
+        Quatre engagements affichés dans l'interface :
+      </p>
+      <ul>
+        <li><strong>Quand une source est tombée</strong>, l'interface le dit. Pas de cache silencieux qui affiche d'anciennes données comme si elles étaient fraîches.</li>
+        <li><strong>Quand une donnée est estimée</strong>, l'interface le dit.</li>
+        <li><strong>Quand un agrégat masque une grande variance</strong>, l'interface le dit.</li>
+        <li><strong>Quand une projection est affichée</strong>, dire « projection » et non « prévision ».</li>
+      </ul>
+
+      <h2>Conversion EUR — note méthodologique</h2>
+      <p>
+        Les valeurs SIPRI sont publiées en <strong>USD constants 2024</strong>. La conversion en EUR est
+        une approximation à titre indicatif, calculée avec le <strong>taux moyen 2024 de la BCE</strong>
+        (1 USD ≈ 0,924 EUR). Pour des analyses fines, se référer aux séries en monnaie locale constante
+        directement chez SIPRI.
+      </p>
+
+      <h2>Note de transparence</h2>
+      <p class="transparency-note">
+        Ce tableau de bord est développé par <strong>Studio à Table</strong> avec l'appui de
+        <strong>Claude (Anthropic)</strong> pour l'architecture logicielle, l'ingestion des données et
+        la construction des visualisations. La sélection des sources, l'arbitrage méthodologique, la
+        qualification des données et la validation finale sont assurés par Yvan Gapin. Les données
+        affichées proviennent des producteurs primaires listés ci-dessus ; Studio à Table assure la
+        sélection, la hiérarchisation et la mise en cohérence, mais ne se substitue pas à eux. Le tableau
+        de bord est un outil d'aide à la lecture stratégique, pas une source de vérité scientifique en
+        lui-même.
+      </p>
+
+      <h2>Code source</h2>
+      <p>
+        Le code est publié sur GitHub sous licence
+        <a href="https://polyformproject.org/licenses/noncommercial/1.0.0" target="_blank" rel="noopener">PolyForm Noncommercial 1.0.0</a>
+        (usage non commercial autorisé avec attribution) :
+        <a href="https://github.com/studioatable/geopolitique-dashboard" target="_blank" rel="noopener">github.com/studioatable/geopolitique-dashboard</a>.
+        Pour tout usage commercial, contacter <a href="mailto:contact@studioatable.fr">contact@studioatable.fr</a>.
+      </p>
+
+      <p class="back-link">
+        <a href="index.html">← Retour à la carte</a>
+      </p>
+    </article>
+  </main>
+
+  <footer class="app-footer minimal">
+    <div class="footer-bottom">
+      <span>© Studio à Table · <a href="https://studioatable.fr" target="_blank" rel="noopener">studioatable.fr</a> · <a href="about.html">À propos &amp; méthodologie</a></span>
+      <span class="version-info">v0.6.1 · MVP Phase 2</span>
+    </div>
+  </footer>
+</body>
+</html>
