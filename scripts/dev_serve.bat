@@ -27,6 +27,17 @@ echo =========================================================
 echo.
 echo  URL : http://localhost:8000/site/
 echo.
+
+REM Etape 1 : ingestion ACLED si cache > 24h (sinon ignore silencieusement)
+echo  [1/2] Verification fraicheur des donnees ACLED ...
+%PYTHON_EXE% ingestion\acled.py
+if errorlevel 2 (
+    echo  [!] ACLED non configure ou erreur fatale (voir .env). On demarre quand meme le serveur.
+)
+
+echo.
+echo  [2/2] Demarrage du serveur HTTP ...
+echo.
 echo  Pour arreter le serveur : Ctrl+C
 echo  Pour fermer cette fenetre apres arret : fermer la croix
 echo.

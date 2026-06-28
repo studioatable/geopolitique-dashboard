@@ -250,12 +250,137 @@ h1, h2, h3 {
   color: var(--sat-blue-light);
 }
 
+.indicator-btn.disabled,
+.indicator-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: auto;
+}
+
+.indicator-btn.disabled .indicator-hint,
+.indicator-btn:disabled .indicator-hint {
+  font-style: italic;
+}
+
 .indicator-hint {
   font-size: 10px;
   font-weight: 400;
   color: var(--sat-text-muted);
   letter-spacing: 0.2px;
 }
+
+/* ============================================================================
+   Panneau de contrôles ACLED (affiché quand indicateur = "Conflits actifs")
+   ============================================================================ */
+
+.acled-controls {
+  position: absolute;
+  top: 76px; /* sous le sélecteur d'indicateur */
+  left: 16px;
+  z-index: 10;
+  background: var(--sat-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-strong);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 480px;
+  font-family: var(--font-sans);
+}
+
+.acled-control-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.acled-control-group.acled-types {
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.acled-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--sat-text-muted);
+  min-width: 60px;
+  margin-top: 4px;
+}
+
+.acled-segment {
+  display: inline-flex;
+  background: var(--sat-bg-light);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+}
+
+.acled-btn {
+  background: transparent;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 3px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--sat-text);
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+
+.acled-btn:hover {
+  color: var(--sat-blue-strong);
+}
+
+.acled-btn.active {
+  background: var(--sat-blue-strong);
+  color: var(--sat-white);
+}
+
+.acled-checkboxes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 12px;
+  flex: 1;
+}
+
+.acled-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--sat-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.acled-checkbox input {
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--sat-blue-strong);
+}
+
+.acled-checkbox.violent {
+  font-weight: 500;
+}
+
+.acled-checkbox.dimmed {
+  color: var(--sat-text-muted);
+}
+
+/* ============================================================================
+   Cercles ACLED (style appliqué via MapLibre, ce bloc documente)
+   ============================================================================ */
+
+/*
+ * Les cercles ACLED sont une couche MapLibre type "circle" (pas du DOM).
+ * Leurs propriétés visuelles sont définies en JS dans buildMap() :
+ *   - rayon proportionnel au log(fatalities + 1)
+ *   - couleur selon catégorie (rouge SAT pour violence, gris pour autre)
+ *   - opacité légère, contour fin
+ */
 
 /* ============================================================================
    Légende (affichée quand un indicateur est sélectionné)
@@ -365,6 +490,26 @@ h1, h2, h3 {
   font-weight: 500;
   color: var(--sat-text-muted);
   margin-left: 4px;
+}
+
+.tooltip-acled-types {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--sat-border);
+  font-size: 12px;
+  color: var(--sat-text);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tooltip-acled-types .acled-type-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
 }
 
 .tooltip .tooltip-disputed {

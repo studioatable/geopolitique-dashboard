@@ -6,6 +6,34 @@ Catégories d'entrées : `Ajouté` (Added), `Modifié` (Changed), `Déprécié` 
 
 ---
 
+## [0.6.3] — 2026-06-28 — Restructuration pour déploiement (étape 8 prep)
+
+### Modifié
+
+- **Restructuration des chemins** pour permettre de servir `site/` directement comme racine du sous-domaine `geopolitique.studioatable.fr` :
+  - `ingestion/france24.py` : sortie JSON dans `site/data/rss/` (au lieu de `data/rss/`)
+  - `ingestion/sipri_milex.py` : sortie JSON dans `site/data/defense/`
+  - `ingestion/acled.py` : sortie GeoJSON et agrégats dans `site/data/conflict/`
+  - `scripts/inspect_sipri.py` : lecture depuis `site/data/defense/`
+  - `site/app.js` : tous les `fetch` utilisent `data/...` (relatif à index.html) au lieu de `../data/...`
+- Migration des fichiers data existants vers la nouvelle structure (`site/data/rss/france24.json`, `site/data/defense/sipri_milex.json`).
+- `data/raw/`, `data/registry/`, `data/audit/` restent à la racine du repo (privés, non servis sur le web).
+
+### Ajouté
+
+- `site/.htaccess` pour o2switch — MIME type `application/geo+json`, gzip sur les types text/json/geo+json, cache navigateur calibré (statique 1 jour, données 0 sec pour respecter le cron), en-têtes de sécurité (`X-Content-Type-Options`, `Referrer-Policy`, HSTS), `X-Robots-Tag: noindex` pour MVP, blocage des fichiers cachés et de `/raw/`.
+- `docs/email_acled_access_request.md` — draft FR + EN de la demande d'upgrade Research à ACLED (envoyé le 28/06/2026).
+- `docs/email_ucdp_token_request.md` — draft FR + EN de la demande de token API UCDP (envoyé le 28/06/2026, délai annoncé 3-5 jours ouvrés).
+
+### Notes
+
+- ACLED tier Open ne donne pas accès à l'API (confirmé par FAQ ACLED). Demande d'upgrade Research en cours.
+- UCDP API est aussi token-protégée depuis 2025-2026. Demande de token en cours.
+- En attendant les accès, l'indicateur "Conflits actifs" du dashboard reste grisé. Le bouton est désactivé proprement côté UI.
+- Phase de déploiement étape 8 : sous-domaine `geopolitique.studioatable.fr` créé sur o2switch (DocumentRoot `/home2/sid3/public_html/geopolitique.studioatable.fr`), clé SSH RSA 4096 `geopolitique` générée et autorisée.
+
+---
+
 ## [0.2.0] — 2026-05-15 — Script d'audit des sources (étape 2)
 
 ### Ajouté
@@ -49,6 +77,39 @@ Catégories d'entrées : `Ajouté` (Added), `Modifié` (Changed), `Déprécié` 
 - Aucune ingestion fonctionnelle à ce stade — étapes 2 à 5 de la roadmap Phase 2 à venir
 - Décisions structurantes (stack, frontières, sources v1.0, hébergement o2switch) consignées dans `decisions_phase_2.md` (dossier parent)
 - Charte applicative et registre des 41 sources conservés dans le dossier parent
+
+---
+
+## [0.7.0] — 2026-05-15 — Ingestion ACLED + visualisation des conflits (étape 7)
+
+Étape pivot du projet : remise des conflits au centre du dashboard.
+
+### Ajouté
+
+- **`ingestion/acled.py`** — module d'ingestion ACLED avec authentification de session Drupal (login email/password via `.env`, plus de clé API statique). Téléchargement paginé des 90 derniers jours, normalisation en GeoJSON minifié et calcul d'agrégats pré-calculés par pays × fenêtre temporelle × catégorie. Cache de fraîcheur 24h (option `--force` pour ignorer).
+- **`python-dotenv>=1.0,<2.0`** ajouté à `requirements.txt`.
+- Sorties ACLED : `data/conflict/acled_events.geojson` (~10 Mo) et `data/conflict/acled_aggregates.json` (~100 Ko).
+- **Nouvel indicateur "Conflits actifs"** dans le sélecteur principal de la carte. Quand sélectionné, un panneau de contrôles supplémentaires s'affiche au-dessus de la carte avec :
+  - Sélecteur **fenêtre temporelle** : 7 j / 30 j / 90 j (30 j par défaut, calcul instantané côté front depuis les agrégats)
+  - Sélecteur **visualisation** : Choroplèthe / Cercles / Les deux
+  - **6 cases à cocher catégories** : Combats, Explosions, Violence civils, Manifestations, Émeutes, Évolutions stratégiques. 3 premières (violence stricte) activées par défaut, 3 dernières désactivées.
+- **Cercles ACLED géolocalisés** avec clustering MapLibre (rayon proportionnel au nombre d'événements ou de victimes, couleur selon catégorie).
+- **Choroplèthe conflits** avec palette graduée rouge-orangée (intensité événements).
+- **Tooltip enrichi en mode ACLED** : nombre d'événements + victimes sur la fenêtre + top 3 catégories avec pastilles colorées.
+- **`scripts/dev_serve.bat`** : appelle désormais `ingestion/acled.py` avant de démarrer le serveur HTTP (cache 24h respecté). Si ACLED échoue, le serveur démarre quand même avec les anciennes données.
+- **Fallback gracieux** si ACLED non ingéré : le bouton "Conflits actifs" est grisé dans l'UI avec une note explicative au survol.
+
+### Modifié
+
+- **`site/index.html`** : nouveau bouton "Conflits actifs" dans le sélecteur (avant Dépenses militaires), nouveau panneau `.acled-controls`.
+- **`site/style.css`** : styles pour le panneau ACLED (segments boutons, cases à cocher avec pastilles colorées, badge type d'événement dans tooltip), état `.indicator-btn.disabled`.
+- **`site/app.js`** : ajout des constantes ACLED, état global `acledState`, fonctions `refreshAcledChoropleth()`, `setupAcledLayers()`, `filterEventsByActiveTypes()`, `refreshAcledCircles()`, `buildAcledTooltipBody()`, `initAcledControls()`. Bootstrap étendu pour charger ACLED de manière optionnelle (loadJsonOptional).
+
+### Notes méthodologiques
+
+- ACLED n'utilise plus de clé API statique depuis sa migration vers Drupal. Authentification = session cookie après POST `/user/login`. `.env` doit contenir `ACLED_EMAIL` et `ACLED_PASSWORD`.
+- Quota gratuit ACLED : 500 000 lignes/mois. Avec la fenêtre 90 jours, ~100k événements par téléchargement, et cache 24h, on est largement en dessous.
+- Les 3 catégories "non violentes" (Protests, Riots, Strategic developments) sont désactivées par défaut conformément à l'objectif "mesurer les conflits", mais reactivables en un clic.
 
 ---
 
@@ -179,7 +240,6 @@ Catégories d'entrées : `Ajouté` (Added), `Modifié` (Changed), `Déprécié` 
 
 ## Prochaines versions prévues (roadmap Phase 2)
 
-- `0.7.0` — Déploiement sur `geopolitique.studioatable.fr` (étape 7)
 - `0.8.0` — Cron serveur SAT actif (étape 8)
 - `0.9.0` — Ingestion ACLED + couche événements (étape 9)
 - `1.0.0` — Tests expert hostile + audit IA tierce + publication (étape 10)

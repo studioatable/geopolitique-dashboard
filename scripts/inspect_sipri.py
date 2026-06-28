@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-JSON_PATH = ROOT / "data" / "defense" / "sipri_milex.json"
+JSON_PATH = ROOT / "site" / "data" / "defense" / "sipri_milex.json"
 
 
 def main() -> int:

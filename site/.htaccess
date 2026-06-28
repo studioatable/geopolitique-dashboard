@@ -1,0 +1,74 @@
+# ============================================================================
+# .htaccess — geopolitique.studioatable.fr (Apache 2.4 / o2switch)
+# Studio à Table — geopolitique-dashboard v0.6.3+
+# ============================================================================
+
+# MIME type pour les fichiers GeoJSON (sinon Apache les sert en text/plain)
+AddType application/geo+json .geojson
+
+# Encodage UTF-8 par défaut sur les types texte
+AddDefaultCharset UTF-8
+
+# ============================================================================
+# Compression gzip (réduit le world.geojson de ~280 Ko à ~80 Ko en transfert)
+# ============================================================================
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE application/geo+json application/xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ============================================================================
+# Cache navigateur — actifs statiques longue durée, données courte durée
+# ============================================================================
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Assets immuables : 30 jours (fonts si on en ajoute, images)
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+
+  # Code statique : 1 jour (révision raisonnable)
+  ExpiresByType text/css "access plus 1 day"
+  ExpiresByType application/javascript "access plus 1 day"
+  ExpiresByType text/html "access plus 1 hour"
+
+  # Données ingérées : pas de cache (mise à jour potentielle quotidienne via cron)
+  ExpiresByType application/json "access plus 0 seconds"
+  ExpiresByType application/geo+json "access plus 0 seconds"
+</IfModule>
+
+# ============================================================================
+# Sécurité — en-têtes HTTP
+# ============================================================================
+<IfModule mod_headers.c>
+  # Pas d'indexation par les moteurs tant que MVP (étape 10 = on retirera)
+  Header set X-Robots-Tag "noindex, nofollow"
+
+  # Protections classiques
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-Frame-Options "SAMEORIGIN"
+
+  # HSTS (HTTPS obligatoire pendant 1 an)
+  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# ============================================================================
+# Routing — site statique simple, pas de routing SPA
+# ============================================================================
+
+# Page par défaut
+DirectoryIndex index.html
+
+# Refuser l'accès aux fichiers .htaccess et fichiers cachés
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>
+
+# Refuser explicitement l'accès au dossier de données brutes si jamais
+# il était déployé par erreur (les ingestions y écrivent côté serveur,
+# mais ces fichiers ne doivent pas être servis sur le web).
+RedirectMatch 404 ^/.*/raw/.*$

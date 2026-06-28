@@ -1,0 +1,366 @@
+{
+  "schema_version": "1.0.0",
+  "ingestion_script": "ingestion/france24.py",
+  "script_version": "0.3.0",
+  "source": {
+    "id": "france24_rss",
+    "name": "France 24",
+    "provider": "France Médias Monde",
+    "category": "news",
+    "feed_url": "https://www.france24.com/fr/rss",
+    "reliability": "high",
+    "license": "Usage non commercial autorisé"
+  },
+  "fetched_at_utc": "2026-06-28T10:08:11.325682+00:00",
+  "items_count": 23,
+  "items": [
+    {
+      "id": "france24_rss-91c9a76a2bb6",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Mondial 2026 : arbitrage, pauses fraîcheur, pelouse... les tops et les flops de la phase de groupes",
+      "summary": "La phase de groupes du Mondial 2026 a pris fin dimanche après presque trois semaines de compétition. À mi-parcours, cette Coupe du monde nouveau format donne à voir du bon et du moins bon : les arbitres qui laissent beaucoup plus jouer, les pauses fraîcheurs... France 24 fait ses tops et ses flops à l'issue des 72 premiers matches de la compétition.",
+      "link": "https://www.france24.com/fr/sports/20260628-mondial-2026-arbitrage-pauses-fra%C3%AEcheur-pelouse-les-tops-et-les-flops-de-la-phase-de-groupes",
+      "published_utc": "2026-06-28T09:42:26+00:00",
+      "published_raw": "Sun, 28 Jun 2026 09:42:26 GMT",
+      "language": "fr",
+      "tags": [
+        "Sports"
+      ],
+      "author": "Jean-Luc MOUNIER"
+    },
+    {
+      "id": "france24_rss-867675373b0b",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Nouvelle-Calédonie : les électeurs aux urnes pour un scrutin décisif",
+      "summary": "Les Calédoniens ont commencé à voter dimanche 28 juin pour les premières élections provinciales depuis 2019, un scrutin qui doit redessiner les rapports de force politiques de l'archipel et peser sur les négociations à venir sur son avenir institutionnel, dans l'impasse depuis les émeutes de 2024. Nous en parlons avec notre envoyé spécial Karim Yahiaoui.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260628-nouvelle-cal%C3%A9donie-les-%C3%A9lecteurs-aux-urnes-pour-un-scrutin-d%C3%A9cisif",
+      "published_utc": "2026-06-28T09:17:59+00:00",
+      "published_raw": "Sun, 28 Jun 2026 09:17:59 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-e133bb14f6d4",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Mondial 2026 : début des 16es de finale ce soir",
+      "summary": "Une nouvelle phase débute dans cette Coupe du monde de football : celle des 16es de finale. Ce soir, première rencontre entre l'Afrique du Sud et le Canada. Nous revenons sur les moments forts de cette phase de poules avec notre envoyé spécial Cédric Ferreira.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260628-mondial-2026-d%C3%A9but-des-16es-de-finale-ce-soir",
+      "published_utc": "2026-06-28T09:17:36+00:00",
+      "published_raw": "Sun, 28 Jun 2026 09:17:36 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-a0788dd4d212",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Coupe du monde 2026 : la Colombie termine devant des Portugais décevants",
+      "summary": "Le Portugal devait battre la Colombie pour récupérer la première place du groupe K. Mais c’est la Colombie qui était la plus proche de l’emporter. Les deux équipes se sont finalement quittées sur un score nul.",
+      "link": "https://www.france24.com/fr/%C3%A9missions/sports/20260628-coupe-du-monde-2026-la-colombie-termine-devant-des-portugais-d%C3%A9cevants",
+      "published_utc": "2026-06-28T09:13:41+00:00",
+      "published_raw": "Sun, 28 Jun 2026 09:13:41 GMT",
+      "language": "fr",
+      "tags": [
+        "Sports"
+      ],
+      "author": "L'Equipe TV"
+    },
+    {
+      "id": "france24_rss-9f88a43d6410",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Canicule : les craintes se confirment sur de nombreux décès en France",
+      "summary": "Des morts qui se mesurent déjà en centaines, et probablement en milliers. Les premiers chiffres officiels commencent à remonter dimanche sur les effets de la canicule exceptionnelle qui s'achève en France mais dont les conséquences sur l'organisme vont encore durer des jours.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260628-canicule-les-craintes-se-confirment-sur-de-nombreux-d%C3%A9c%C3%A8s-en-france",
+      "published_utc": "2026-06-28T09:12:56+00:00",
+      "published_raw": "Sun, 28 Jun 2026 09:12:56 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-93efac555188",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Venezuela : 72 heures après les séismes meurtriers, la quête de survivants continue",
+      "summary": "Le temps presse pour retrouver des survivants 72 heures après le double séisme au Venezuela dont le bilan continue de s'alourdir : 1 430 morts et plus de 50 000 disparus, alors que l'aide humanitaire internationale monte en puissance sur place.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260628-venezuela-72-heures-apr%C3%A8s-les-s%C3%A9ismes-meurtriers-la-qu%C3%AAte-de-survivants-continue",
+      "published_utc": "2026-06-28T09:11:34+00:00",
+      "published_raw": "Sun, 28 Jun 2026 09:11:34 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-1d0c21c38a85",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "L'Iran cible le Koweït et Bahreïn après des frappes américaines sur son sol",
+      "summary": "L'Iran s'est affirmé dimanche \"déterminé\" à défendre sa souveraineté et a mené des frappes visant le Koweït et Bahreïn, au lendemain d'attaques américaines contre son territoire, un regain de tension qui menace la poursuite des négociations pour mettre un terme au conflit au Moyen-Orient.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260628-l-iran-cible-le-kowe%C3%AFt-et-bahre%C3%AFn-apr%C3%A8s-des-frappes-am%C3%A9ricaines-sur-son-sol",
+      "published_utc": "2026-06-28T09:10:06+00:00",
+      "published_raw": "Sun, 28 Jun 2026 09:10:06 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-e4f4c47219cf",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "\"C'est notre hémisphère\" : la Colombie étend la zone d'influence de Trump en Amérique latine",
+      "summary": "La victoire d’Abelardo De La Espriella à la présidentielle en Colombie offre un nouvel allié à la Maison Blanche, qui entend \"restaurer sa prééminence dans l’hémisphère occidental\". Au total, on dénombre 12 pays latino-américains dont les gouvernements sont proches de Washington, qui lorgne désormais le Brésil et Cuba.",
+      "link": "https://www.france24.com/fr/am%C3%A9riques/20260628-c-est-notre-h%C3%A9misph%C3%A8re-la-colombie-%C3%A9tend-la-zone-d-influence-de-trump-en-am%C3%A9rique-latine",
+      "published_utc": "2026-06-28T08:35:09+00:00",
+      "published_raw": "Sun, 28 Jun 2026 08:35:09 GMT",
+      "language": "fr",
+      "tags": [
+        "Amériques"
+      ],
+      "author": "Eumar ESAÁ"
+    },
+    {
+      "id": "france24_rss-8c6bfdd3235a",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "En Nouvelle-Calédonie, un vote dans le calme pour des élections provinciales à hauts enjeux",
+      "summary": "Les Calédoniens se sont rendus aux urnes ce dimanche dans le cadre d'élections provinciales aux enjeux majeurs. Il s'agit du premier scrutin provincial depuis 2019.",
+      "link": "https://www.france24.com/fr/france/20260628-en-nouvelle-cal%C3%A9donie-un-vote-dans-le-calme-pour-des-%C3%A9lections-provinciales-%C3%A0-hauts-enjeux",
+      "published_utc": "2026-06-28T08:26:17+00:00",
+      "published_raw": "Sun, 28 Jun 2026 08:26:17 GMT",
+      "language": "fr",
+      "tags": [
+        "France"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-85d526448e11",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Venezuela : la quête éperdue de survivants trois jours après les séismes meurtriers",
+      "summary": "Le temps presse pour retrouver des survivants plus de 72 heures après le double séisme au Venezuela dont le bilan continue de s'alourdir : 1 430 morts et plus de 50 000 disparus. Les habitants de La Guaira, zone la plus affectée par la catastrophe, tentent de dégager les victimes avec des moyens très rudimentaires.",
+      "link": "https://www.france24.com/fr/am%C3%A9riques/20260628-venezuela-la-recherche-eperdue-de-survivants-trois-jours-apres-les-s%C3%A9ismes-meurtriers",
+      "published_utc": "2026-06-28T08:23:17+00:00",
+      "published_raw": "Sun, 28 Jun 2026 08:23:17 GMT",
+      "language": "fr",
+      "tags": [
+        "Amériques"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-4c0a877095bf",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "🔴 Canicule en direct : environ 1 000 décès supplémentaires que la normale recensés en France",
+      "summary": "",
+      "link": "https://www.france24.com/fr/france/20260628-en-direct-d%C3%A9j%C3%A0-environ-1-000-d%C3%A9c%C3%A8s-de-plus-que-la-normale-recens%C3%A9s-depuis-mercredi",
+      "published_utc": "2026-06-28T07:00:32+00:00",
+      "published_raw": "Sun, 28 Jun 2026 07:00:32 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-6b8ea5979bca",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Canicule en direct : environ 1 000 décès de plus que la normale recensés en France",
+      "summary": "Depuis mercredi, un millier de décès de plus que la normale ont déjà été recensés en France, a annoncé dimanche l'Agence nationale de santé publique, alors que s'achève une canicule exceptionnelle par son intensité. L'agence a prévenu que le bilan réel est voué à s'alourdir. Suivez notre direct.",
+      "link": "https://www.france24.com/fr/france/20260628-en-direct-d%C3%A9j%C3%A0-environ-1-000-d%C3%A9c%C3%A8s-de-plus-que-la-normale-recens%C3%A9s-depuis-mercredi",
+      "published_utc": "2026-06-28T06:53:36+00:00",
+      "published_raw": "Sun, 28 Jun 2026 06:53:36 GMT",
+      "language": "fr",
+      "tags": [
+        "France"
+      ],
+      "author": "Elie SAIKALI"
+    },
+    {
+      "id": "france24_rss-12859e77f260",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Mondial 2026 : résultats, articles et temps forts de la nuit",
+      "summary": "L'Algérie se qualifie pour les 16es de finale après un match fou contre l'Autriche, la Colombie et le Portugal se neutralisent, qualification historique pour la RD Congo... Retrouvez les résultats des matches disputés dans la nuit, les temps forts et les derniers articles de France 24 sur la Coupe du monde 2026.",
+      "link": "https://www.france24.com/fr/sports/20260628-mondial-2026-r%C3%A9sultats-articles-et-temps-forts-de-la-nuit",
+      "published_utc": "2026-06-28T06:29:34+00:00",
+      "published_raw": "Sun, 28 Jun 2026 06:29:34 GMT",
+      "language": "fr",
+      "tags": [
+        "Sports"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-fa270b46bcd8",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Rugby : le Stade toulousain remporte un quatrième titre de champion de France consécutif",
+      "summary": "Les coéquipiers d'Antoine Dupont ont remporté samedi un quatrième titre de champion de France consécutif en triomphant de Montpellier (28-20) en finale du Top 14.",
+      "link": "https://www.france24.com/fr/sports/20260628-le-stade-toulousain-remporte-un-quatri%C3%A8me-titre-de-champion-de-france-cons%C3%A9cutif",
+      "published_utc": "2026-06-28T06:04:43+00:00",
+      "published_raw": "Sun, 28 Jun 2026 06:04:43 GMT",
+      "language": "fr",
+      "tags": [
+        "Sports"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-edd0b2b1418f",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "En direct : l'Iran cible le Koweït et Bahreïn après des frappes américaines sur son sol",
+      "summary": "Les États-Unis et l'Iran ont échangé de nouvelles frappes samedi et dimanche, s'accusant mutuellement de violations de leur fragile cessez-le-feu signé le 17 juin, et le président américain Donald Trump a de nouveau menacé de reprendre la guerre pour anéantir la République islamique. Suivez notre direct.",
+      "link": "https://www.france24.com/fr/moyen-orient/20260628-en-direct-nouvel-%C3%A9change-de-frappes-entre-les-%C3%A9tats-unis-et-l-iran",
+      "published_utc": "2026-06-28T05:16:17+00:00",
+      "published_raw": "Sun, 28 Jun 2026 05:16:17 GMT",
+      "language": "fr",
+      "tags": [
+        "Moyen-Orient"
+      ],
+      "author": "Elie SAIKALI"
+    },
+    {
+      "id": "france24_rss-45bcb0de2060",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Mondial 2026 : des sueurs froides pour l'Algérie, qualifiée en 16es après un match fou contre l'Autriche",
+      "summary": "",
+      "link": "https://www.france24.com/fr/sports/20260628-mondial-2026-l-alg%C3%A9rie-qualifi%C3%A9e-dans-un-sc%C3%A9nario-extraordinaire-contre-l-autriche-l-argentine-fait-la-passe-de-3",
+      "published_utc": "2026-06-28T04:03:40+00:00",
+      "published_raw": "Sun, 28 Jun 2026 04:03:40 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-53688f76ae3e",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Mondial : le scénario fou de la qualification de l'Algérie en 16e, l'Argentine et Messi déroulent",
+      "summary": "Il fallait au moins un match nul à l'Algérie pour se qualifier contre l'Autriche. Dimanche à Kansas City, les Fennecs s'en sont remis à Riyad Mahrez pour se sauver (3-3), après avoir été menés par deux fois, et joueront la Suisse en 16es de finale. L'Argentine, avec un nouveau but de Lionel Messi, a réalisé un parcours parfait, trois victoires en trois matches, avec un dernier succès contre la Jordanie (3-1).",
+      "link": "https://www.france24.com/fr/sports/20260628-mondial-2026-l-alg%C3%A9rie-qualifi%C3%A9e-dans-un-sc%C3%A9nario-extraordinaire-contre-l-autriche-l-argentine-fait-la-passe-de-3",
+      "published_utc": "2026-06-28T04:00:00+00:00",
+      "published_raw": "Sun, 28 Jun 2026 04:00:00 GMT",
+      "language": "fr",
+      "tags": [
+        "Sports"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-c06e18854d30",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Mondial 2026 : les mésaventures de Clément d’Antibes à la douane américaine",
+      "summary": "Contrôles renforcés, problèmes de visas… Certains supporters ont connu un parcours semé d'embûches pour entrer aux États-Unis pour la Coupe du monde. Clément d'Antibes n'y a pas échappé. Né en Algérie, d'un père polonais et d'une mère espagnole, le plus célèbre supporter des Bleus a bien malgré lui donné du fil à retordre aux douaniers américains. Une anecdote qu'il raconte avec son humour légendaire.",
+      "link": "https://www.france24.com/fr/vid%C3%A9o/20260628-mondial-2026-les-m%C3%A9saventures-de-cl%C3%A9ment-d-antibes-%C3%A0-la-douane-am%C3%A9ricaine",
+      "published_utc": "2026-06-28T02:51:06+00:00",
+      "published_raw": "Sun, 28 Jun 2026 02:51:06 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-7dce32f98185",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Nouvelles frappes des États-Unis contre l'Iran, qui réplique en visant le Koweït et Bahreïn",
+      "summary": "",
+      "link": "https://www.france24.com/fr/moyen-orient/20260628-moyen-orient-nouvelles-frappes-etats-unis-iran-replique-koweit-bahre%C3%AFn-donald-trump",
+      "published_utc": "2026-06-28T02:47:17+00:00",
+      "published_raw": "Sun, 28 Jun 2026 02:47:17 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-b82bc8415d99",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Nouvelles frappes des États-Unis contre l'Iran, qui réplique en visant le Koweït et Bahreïn",
+      "summary": "Pour la deuxième nuit consécutive, Téhéran et Washington ont violé le cessez-le-feu signé le 17 juin. L'aviation américaine a visé samedi soir dix cibles en Iran, en représailles à une attaque par un drone iranien d'un pétrolier dans le détroit d'Ormuz. Dimanche à l'aube, les Gardiens de la révolution iraniens ont répondu en lançant des missiles et des drones vers le Koweït et Bahreïn.",
+      "link": "https://www.france24.com/fr/moyen-orient/20260628-moyen-orient-nouvelles-frappes-etats-unis-iran-replique-koweit-bahre%C3%AFn-donald-trump",
+      "published_utc": "2026-06-28T02:26:36+00:00",
+      "published_raw": "Sun, 28 Jun 2026 02:26:36 GMT",
+      "language": "fr",
+      "tags": [
+        "Moyen-Orient"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-139a38a902e3",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Mondial 2026 : la RDC se fait peur contre l'Ouzbékistan (3-1) mais obtient une qualification historique",
+      "summary": "",
+      "link": "https://www.france24.com/fr/sports/20260628-mondial-2026-une-qualification-historique-pour-la-rdc-la-colombie-termine-devant-le-portugal",
+      "published_utc": "2026-06-28T01:34:28+00:00",
+      "published_raw": "Sun, 28 Jun 2026 01:34:28 GMT",
+      "language": "fr",
+      "tags": [],
+      "author": "FRANCE24"
+    },
+    {
+      "id": "france24_rss-5e73ea1c6269",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Mondial 2026 : qualification historique pour la RD Congo, la Colombie finit devant le Portugal",
+      "summary": "La RD Congo a écrit son histoire dimanche à Atlanta. Une première victoire en Coupe du monde et surtout une première qualification historique en 16es de finale grâce à une victoire face à l'Ouzbékistan (3-1). De leur côté, le Portugal et la Colombie se sont quittés bons amis sur un 0-0, offrant la première place du groupe K aux Cafeteros.",
+      "link": "https://www.france24.com/fr/sports/20260628-mondial-2026-une-qualification-historique-pour-la-rdc-la-colombie-termine-devant-le-portugal",
+      "published_utc": "2026-06-28T01:32:46+00:00",
+      "published_raw": "Sun, 28 Jun 2026 01:32:46 GMT",
+      "language": "fr",
+      "tags": [
+        "Sports"
+      ],
+      "author": "FRANCE 24"
+    },
+    {
+      "id": "france24_rss-b5aa94be1bdb",
+      "source_id": "france24_rss",
+      "source_name": "France 24",
+      "source_category": "news",
+      "title": "Algérie - Autriche : Les Fennecs qualifiés au bout d'un match rocambolesque",
+      "summary": "L'Algérie a croisé la route de l'Autriche pour son dernier match du groupe J, dimanche, à l'Arrowhead Stadium de Kansas City. Les deux sélections ont obtenu leur billet pour les 16es de finale après être passées par toutes les émotions. Revivez le match commenté de nos confrères de RFI.",
+      "link": "https://www.france24.com/fr/sports/20260628-alg%C3%A9rie-autriche-en-direct-pour-les-fennecs-et-das-team-une-deuxi%C3%A8me-place-en-jeu",
+      "published_utc": "2026-06-28T01:00:08+00:00",
+      "published_raw": "Sun, 28 Jun 2026 01:00:08 GMT",
+      "language": "fr",
+      "tags": [
+        "Sports"
+      ],
+      "author": "RFI"
+    }
+  ]
+}

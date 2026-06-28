@@ -21,10 +21,15 @@
 // 0. Constantes et configuration
 // ---------------------------------------------------------------------------
 
+// Tous les chemins sont relatifs à site/index.html, ce qui permet de servir
+// le dossier site/ directement comme racine du sous-domaine en production
+// (geopolitique.studioatable.fr → DocumentRoot = .../site/).
 const DATA_PATHS = {
   worldGeoJson: 'data/world.geojson',
-  sipri: '../data/defense/sipri_milex.json',
-  rss: '../data/rss/france24.json',
+  sipri: 'data/defense/sipri_milex.json',
+  rss: 'data/rss/france24.json',
+  acledAggregates: 'data/conflict/acled_aggregates.json',
+  acledEvents: 'data/conflict/acled_events.geojson',
 };
 
 // Année cible pour la choroplèthe (dernière année dispo dans SIPRI)
@@ -61,6 +66,27 @@ const CHOROPLETH_STOPS_PCT_GDP = [
 const NO_DATA_COLOR = '#E7E2E2';
 const COUNTRY_BORDER = '#FFFFFF';
 const COUNTRY_BORDER_DISPUTED = '#BC534F';
+
+// === ACLED : catégories d'événements, libellés FR, couleurs cercles ===
+const ACLED_EVENT_TYPES_UI = [
+  { id: 'Battles', fr: 'Combats armés', violent: true, color: '#BC534F' },
+  { id: 'Explosions/Remote violence', fr: 'Explosions / Violence à distance', violent: true, color: '#8B3A37' },
+  { id: 'Violence against civilians', fr: 'Violence contre civils', violent: true, color: '#D67B77' },
+  { id: 'Protests', fr: 'Manifestations', violent: false, color: '#0678B7' },
+  { id: 'Riots', fr: 'Émeutes', violent: false, color: '#40C6FF' },
+  { id: 'Strategic developments', fr: 'Évolutions stratégiques', violent: false, color: '#54595F' },
+];
+
+// Choroplèthe conflits : palette graduée rouge-orangée (intensité)
+const CHOROPLETH_STOPS_ACLED_EVENTS = [
+  [0,    '#F3F3F3'],
+  [10,   '#FCE4E2'],
+  [50,   '#F4B4B0'],
+  [200,  '#E07A75'],
+  [500,  '#BC534F'],
+  [1500, '#8B3A37'],
+  [5000, '#5A2422'],
+];
 
 // Mapping manuel des noms de pays SIPRI → noms Natural Earth quand les noms
 // divergent. À enrichir au besoin (la charte recommande la traçabilité de
@@ -255,13 +281,31 @@ async function loadJson(path) {
   return resp.json();
 }
 
+async function loadJsonOptional(path) {
+  // Comme loadJson, mais retourne null en cas d'erreur (404 si ACLED pas
+  // encore ingéré) plutôt que de planter toute l'app.
+  try {
+    const resp = await fetch(path);
+    if (!resp.ok) {
+      console.warn(`[SAT-GEO] ${path} indisponible (HTTP ${resp.status}). Ignoré.`);
+      return null;
+    }
+    return await resp.json();
+  } catch (err) {
+    console.warn(`[SAT-GEO] ${path} échec chargement :`, err);
+    return null;
+  }
+}
+
 async function loadAll() {
-  const [world, sipri, rss] = await Promise.all([
+  const [world, sipri, rss, acledAggregates, acledEvents] = await Promise.all([
     loadJson(DATA_PATHS.worldGeoJson),
     loadJson(DATA_PATHS.sipri),
     loadJson(DATA_PATHS.rss),
+    loadJsonOptional(DATA_PATHS.acledAggregates),
+    loadJsonOptional(DATA_PATHS.acledEvents),
   ]);
-  return { world, sipri, rss };
+  return { world, sipri, rss, acledAggregates, acledEvents };
 }
 
 // ---------------------------------------------------------------------------
@@ -321,6 +365,19 @@ function joinSipriToFeatures(worldGeoJson, sipriIndex) {
 // ---------------------------------------------------------------------------
 // 3. Initialisation MapLibre
 // ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// 2b. État global ACLED (mis à jour par les contrôles UI)
+// ---------------------------------------------------------------------------
+
+const acledState = {
+  available: false,           // true si acled_aggregates.json a été chargé
+  aggregates: null,           // contenu acled_aggregates.json
+  eventsGeoJson: null,        // contenu acled_events.geojson
+  window: '30d',              // '7d' | '30d' | '90d'
+  viz: 'choropleth',          // 'choropleth' | 'circles' | 'both'
+  enabledTypes: new Set(['Battles', 'Explosions/Remote violence', 'Violence against civilians']),
+};
 
 function buildMap(worldGeoJson) {
   // Style minimaliste sans tuiles externes : on n'a besoin que des polygones
@@ -392,6 +449,7 @@ function buildMap(worldGeoJson) {
         },
       ],
     },
+    // ACLED events sources/layers ajoutés après le load (dans setupAcledLayers)
     center: [10, 25],
     zoom: 1.6,
     minZoom: 1,
@@ -399,6 +457,9 @@ function buildMap(worldGeoJson) {
     attributionControl: false,
   });
 
+  // Filtrer les événements ACLED selon les types activés + fenêtre temporelle.
+  // Construit dynamiquement à chaque changement de contrôle UI.
+  void worldGeoJson;
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
   map.addControl(
     new maplibregl.AttributionControl({
@@ -423,6 +484,21 @@ function buildFillExpression(indicator) {
   if (indicator === 'none') {
     return '#FFFFFF';
   }
+  if (indicator === 'acled') {
+    // Pour ACLED, l'expression utilise une propriété calculée injectée
+    // dynamiquement dans les features (acled_events_window). Cf. applyAcledChoropleth.
+    return [
+      'case',
+      ['==', ['get', 'acled_events_window'], null],
+      NO_DATA_COLOR,
+      [
+        'interpolate',
+        ['linear'],
+        ['to-number', ['get', 'acled_events_window']],
+        ...CHOROPLETH_STOPS_ACLED_EVENTS.flat(),
+      ],
+    ];
+  }
   const stops = indicator === 'milex_constant_usd'
     ? CHOROPLETH_STOPS_USD
     : CHOROPLETH_STOPS_PCT_GDP;
@@ -442,7 +518,31 @@ function buildFillExpression(indicator) {
 }
 
 function applyIndicator(map, indicator) {
-  map.setPaintProperty('countries-fill', 'fill-color', buildFillExpression(indicator));
+  // Affiche/masque le panneau de contrôles ACLED
+  const acledControls = document.getElementById('acled-controls');
+  if (acledControls) acledControls.hidden = indicator !== 'acled';
+
+  // Affiche/masque les cercles ACLED
+  if (map.getLayer('acled-circles')) {
+    const visible = indicator === 'acled' && (acledState.viz === 'circles' || acledState.viz === 'both');
+    map.setLayoutProperty('acled-circles', 'visibility', visible ? 'visible' : 'none');
+  }
+
+  // Pour ACLED : recalculer les valeurs choroplèthe selon fenêtre + types
+  if (indicator === 'acled') {
+    if (!acledState.available) {
+      const legend = document.getElementById('legend');
+      legend.hidden = false;
+      legend.querySelector('#legend-title').textContent = 'ACLED indisponible';
+      legend.querySelector('#legend-scale').innerHTML = '';
+      legend.querySelector('#legend-source').textContent = 'Lancer python ingestion/acled.py et recharger.';
+      map.setPaintProperty('countries-fill', 'fill-color', '#FFFFFF');
+      return;
+    }
+    refreshAcledChoropleth(map);
+  } else {
+    map.setPaintProperty('countries-fill', 'fill-color', buildFillExpression(indicator));
+  }
 
   // Met à jour la légende
   const legend = document.getElementById('legend');
@@ -455,6 +555,17 @@ function applyIndicator(map, indicator) {
     return;
   }
   legend.hidden = false;
+
+  if (indicator === 'acled') {
+    const winLabel = { '7d': '7 jours', '30d': '30 jours', '90d': '90 jours' }[acledState.window];
+    title.textContent = `Événements ACLED — ${winLabel} (catégories actives : ${acledState.enabledTypes.size}/${ACLED_EVENT_TYPES_UI.length})`;
+    source.textContent = 'Source : ACLED · maj hebdomadaire · cache local 24 h';
+    const stops = CHOROPLETH_STOPS_ACLED_EVENTS;
+    const min = stops[0][0];
+    const max = stops[stops.length - 1][0];
+    scale.innerHTML = `<span>${min} événement</span><div class="legend-scale-bar" style="background: linear-gradient(to right, #F3F3F3 0%, #E07A75 50%, #5A2422 100%);"></div><span>${max}+</span>`;
+    return;
+  }
 
   const stops = indicator === 'milex_constant_usd'
     ? CHOROPLETH_STOPS_USD
@@ -478,6 +589,175 @@ function applyIndicator(map, indicator) {
     : `${max} %`;
 
   scale.innerHTML = `<span>${formatMin}</span><div class="legend-scale-bar"></div><span>${formatMax}</span>`;
+}
+
+// ---------------------------------------------------------------------------
+// 4b. ACLED : choroplèthe par pays + cercles géolocalisés
+// ---------------------------------------------------------------------------
+
+function refreshAcledChoropleth(map) {
+  // Calcule le nombre d'événements par pays sur la fenêtre courante en
+  // ne comptant que les catégories activées, puis l'injecte comme propriété
+  // 'acled_events_window' dans chaque feature Natural Earth.
+  if (!acledState.available || !acledState.aggregates) return;
+
+  const source = map.getSource('countries');
+  if (!source) return;
+  const data = source._data; // GeoJSON courant
+
+  const byCountry = acledState.aggregates.by_country || {};
+  const enabledTypes = acledState.enabledTypes;
+  const allTypesEnabled = enabledTypes.size === ACLED_EVENT_TYPES_UI.length;
+
+  data.features.forEach((feat) => {
+    const props = feat.properties || {};
+    // Joindre par nom EN ou par iso3
+    let countryData = byCountry[props.name] || byCountry[props.name_long];
+    if (!countryData && props.iso_a3) {
+      countryData = Object.values(byCountry).find((c) => c.iso3 === props.iso_a3);
+    }
+    if (!countryData) {
+      props.acled_events_window = null;
+      return;
+    }
+    const win = countryData.windows?.[acledState.window];
+    if (!win) {
+      props.acled_events_window = null;
+      return;
+    }
+    if (allTypesEnabled) {
+      props.acled_events_window = win.events;
+    } else {
+      // Somme uniquement sur les catégories activées
+      let sum = 0;
+      enabledTypes.forEach((t) => {
+        sum += win.by_type?.[t] || 0;
+      });
+      props.acled_events_window = sum > 0 ? sum : null;
+    }
+  });
+
+  source.setData(data);
+  map.setPaintProperty('countries-fill', 'fill-color', buildFillExpression('acled'));
+}
+
+function setupAcledLayers(map) {
+  // Ajoute la source des points ACLED et la couche cercles avec clustering.
+  if (!acledState.available || !acledState.eventsGeoJson) return;
+
+  // Filtrer les features selon les types activés AVANT d'alimenter la source
+  // (MapLibre ne supporte pas le filtrage côté UI via setFilter sur les
+  // sources GeoJSON volumineuses de manière performante).
+  const filtered = filterEventsByActiveTypes(acledState.eventsGeoJson);
+
+  if (!map.getSource('acled-events')) {
+    map.addSource('acled-events', {
+      type: 'geojson',
+      data: filtered,
+      cluster: true,
+      clusterMaxZoom: 7,
+      clusterRadius: 40,
+    });
+
+    // Clusters
+    map.addLayer({
+      id: 'acled-clusters',
+      type: 'circle',
+      source: 'acled-events',
+      filter: ['has', 'point_count'],
+      paint: {
+        'circle-color': [
+          'step',
+          ['get', 'point_count'],
+          '#E07A75', 50,
+          '#BC534F', 200,
+          '#8B3A37', 1000,
+          '#5A2422',
+        ],
+        'circle-radius': [
+          'step',
+          ['get', 'point_count'],
+          14, 50, 18, 200, 24, 1000, 32,
+        ],
+        'circle-opacity': 0.85,
+        'circle-stroke-width': 1,
+        'circle-stroke-color': '#FFFFFF',
+      },
+      layout: { visibility: 'none' },
+    });
+
+    map.addLayer({
+      id: 'acled-cluster-count',
+      type: 'symbol',
+      source: 'acled-events',
+      filter: ['has', 'point_count'],
+      layout: {
+        'text-field': ['get', 'point_count_abbreviated'],
+        'text-size': 11,
+        visibility: 'none',
+      },
+      paint: { 'text-color': '#FFFFFF' },
+    });
+
+    // Points individuels (non clusterisés)
+    map.addLayer({
+      id: 'acled-circles',
+      type: 'circle',
+      source: 'acled-events',
+      filter: ['!', ['has', 'point_count']],
+      paint: {
+        'circle-radius': [
+          'interpolate',
+          ['linear'],
+          ['coalesce', ['to-number', ['get', 'f']], 0],
+          0, 3,
+          10, 5,
+          50, 8,
+          200, 12,
+        ],
+        'circle-color': [
+          'match',
+          ['get', 't'],
+          'Battles', '#BC534F',
+          'Explosions/Remote violence', '#8B3A37',
+          'Violence against civilians', '#D67B77',
+          'Protests', '#0678B7',
+          'Riots', '#40C6FF',
+          'Strategic developments', '#54595F',
+          '#999999',
+        ],
+        'circle-opacity': 0.65,
+        'circle-stroke-width': 0.5,
+        'circle-stroke-color': '#FFFFFF',
+      },
+      layout: { visibility: 'none' },
+    });
+  } else {
+    map.getSource('acled-events').setData(filtered);
+  }
+}
+
+function filterEventsByActiveTypes(eventsGeoJson) {
+  if (!eventsGeoJson) return { type: 'FeatureCollection', features: [] };
+  const enabledTypes = acledState.enabledTypes;
+  if (enabledTypes.size === ACLED_EVENT_TYPES_UI.length) return eventsGeoJson;
+  return {
+    type: 'FeatureCollection',
+    features: eventsGeoJson.features.filter((f) => enabledTypes.has(f.properties?.t)),
+  };
+}
+
+function refreshAcledCircles(map) {
+  if (!acledState.available || !map.getSource('acled-events')) return;
+  const filtered = filterEventsByActiveTypes(acledState.eventsGeoJson);
+  map.getSource('acled-events').setData(filtered);
+
+  const circlesVisible = currentIndicator === 'acled' && (acledState.viz === 'circles' || acledState.viz === 'both');
+  ['acled-circles', 'acled-clusters', 'acled-cluster-count'].forEach((layerId) => {
+    if (map.getLayer(layerId)) {
+      map.setLayoutProperty(layerId, 'visibility', circlesVisible ? 'visible' : 'none');
+    }
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -505,6 +785,50 @@ function frenchName(enName) {
   return COUNTRY_NAME_FR[enName] || enName;
 }
 
+function buildAcledTooltipBody(props) {
+  // Compose le corps du tooltip en mode ACLED : événements, victimes,
+  // top catégories sur la fenêtre courante.
+  if (!acledState.available || !acledState.aggregates) {
+    return `<div class="tooltip-unit">ACLED indisponible. Lancer python ingestion/acled.py.</div>`;
+  }
+  const byCountry = acledState.aggregates.by_country || {};
+  let countryData = byCountry[props.name] || byCountry[props.name_long];
+  if (!countryData && props.iso_a3) {
+    countryData = Object.values(byCountry).find((c) => c.iso3 === props.iso_a3);
+  }
+  if (!countryData) {
+    return `<div class="tooltip-unit">Aucun événement ACLED recensé sur la fenêtre courante.</div>`;
+  }
+  const win = countryData.windows?.[acledState.window];
+  if (!win || win.events === 0) {
+    return `<div class="tooltip-unit">Aucun événement ACLED sur la fenêtre ${acledState.window}.</div>`;
+  }
+
+  // Breakdown par catégorie (top 3, uniquement catégories activées)
+  const byType = win.by_type || {};
+  const enabledTypes = acledState.enabledTypes;
+  const breakdown = Object.entries(byType)
+    .filter(([t]) => enabledTypes.has(t))
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3);
+
+  const breakdownHtml = breakdown.length > 0
+    ? `<div class="tooltip-acled-types">${breakdown.map(([t, n]) => {
+        const typeDef = ACLED_EVENT_TYPES_UI.find((d) => d.id === t);
+        const label = typeDef ? typeDef.fr : t;
+        return `<div><span class="acled-type-dot" style="background:${typeDef ? typeDef.color : '#999'}"></span> ${escapeHtml(label)} : <strong>${n}</strong></div>`;
+      }).join('')}</div>`
+    : '';
+
+  const winLabel = { '7d': '7 derniers jours', '30d': '30 derniers jours', '90d': '90 derniers jours' }[acledState.window];
+
+  return `
+    <div class="tooltip-value">${win.events.toLocaleString('fr-FR')} événements</div>
+    <div class="tooltip-unit">${win.fatalities.toLocaleString('fr-FR')} victime${win.fatalities > 1 ? 's' : ''} recensée${win.fatalities > 1 ? 's' : ''} · ${winLabel}</div>
+    ${breakdownHtml}
+  `;
+}
+
 function frenchContinent(continent) {
   if (!continent) return '';
   return CONTINENT_FR[continent] || continent;
@@ -522,7 +846,9 @@ function showTooltip(event, feature) {
   const isDisputed = props.disputed === true || props.disputed === 'true';
 
   let valueHtml = '';
-  if (currentIndicator !== 'none') {
+  if (currentIndicator === 'acled') {
+    valueHtml = buildAcledTooltipBody(props);
+  } else if (currentIndicator !== 'none') {
     const v = props[currentIndicator];
     const formatted = formatValue(currentIndicator, v);
     if (formatted !== null) {
@@ -545,11 +871,14 @@ function showTooltip(event, feature) {
     disputedHtml = `<div class="tooltip-disputed"><strong>Statut disputé.</strong> ${props.dispute_note}</div>`;
   }
 
-  const sourceHtml = currentIndicator === 'none'
-    ? ''
-    : `<div class="tooltip-source">${currentIndicator === 'milex_constant_usd'
-        ? 'Source SIPRI MILEX (★★★★)'
-        : 'Source SIPRI MILEX (★★★★) — ratio dépenses militaires / PIB'}</div>`;
+  let sourceHtml = '';
+  if (currentIndicator === 'milex_constant_usd') {
+    sourceHtml = `<div class="tooltip-source">Source SIPRI MILEX (★★★★)</div>`;
+  } else if (currentIndicator === 'milex_pct_gdp') {
+    sourceHtml = `<div class="tooltip-source">Source SIPRI MILEX (★★★★) — ratio dépenses militaires / PIB</div>`;
+  } else if (currentIndicator === 'acled') {
+    sourceHtml = `<div class="tooltip-source">Source ACLED (★★★★) — événements ${{ '7d': '7 jours', '30d': '30 jours', '90d': '90 jours' }[acledState.window]}</div>`;
+  }
 
   const continentFr = frenchContinent(props.continent);
   const subregionFr = frenchSubregion(props.subregion);
@@ -793,14 +1122,80 @@ function addCountryLabels(map, geojson) {
 // 8. Bootstrap principal
 // ---------------------------------------------------------------------------
 
+function initAcledControls(map) {
+  // Cases à cocher des catégories ACLED
+  const container = document.getElementById('acled-types-checkboxes');
+  if (container) {
+    container.innerHTML = '';
+    ACLED_EVENT_TYPES_UI.forEach((typeDef) => {
+      const label = document.createElement('label');
+      label.className = 'acled-checkbox' + (typeDef.violent ? ' violent' : ' dimmed');
+      const checked = acledState.enabledTypes.has(typeDef.id);
+      label.innerHTML = `
+        <input type="checkbox" data-acled-type="${escapeHtml(typeDef.id)}" ${checked ? 'checked' : ''}>
+        <span class="acled-type-dot" style="background:${typeDef.color}"></span>
+        <span>${escapeHtml(typeDef.fr)}</span>
+      `;
+      container.appendChild(label);
+    });
+    container.querySelectorAll('input[type=checkbox]').forEach((input) => {
+      input.addEventListener('change', () => {
+        const type = input.dataset.acledType;
+        if (input.checked) acledState.enabledTypes.add(type);
+        else acledState.enabledTypes.delete(type);
+        if (currentIndicator === 'acled') {
+          refreshAcledChoropleth(map);
+          refreshAcledCircles(map);
+          applyIndicator(map, 'acled'); // pour rafraîchir la légende
+        }
+      });
+    });
+  }
+
+  // Boutons fenêtre temporelle
+  document.querySelectorAll('.acled-btn[data-window]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.acled-btn[data-window]').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      acledState.window = btn.dataset.window;
+      if (currentIndicator === 'acled') {
+        refreshAcledChoropleth(map);
+        applyIndicator(map, 'acled');
+      }
+    });
+  });
+
+  // Boutons visualisation
+  document.querySelectorAll('.acled-btn[data-viz]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.acled-btn[data-viz]').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      acledState.viz = btn.dataset.viz;
+      if (currentIndicator === 'acled') {
+        // Choroplèthe visible si choropleth ou both
+        const choroVisible = acledState.viz === 'choropleth' || acledState.viz === 'both';
+        if (map.getLayer('countries-fill')) {
+          map.setPaintProperty(
+            'countries-fill',
+            'fill-color',
+            choroVisible ? buildFillExpression('acled') : '#FFFFFF',
+          );
+        }
+        refreshAcledCircles(map);
+      }
+    });
+  });
+}
+
 (async function bootstrap() {
   const loadingEl = document.getElementById('loading');
   try {
-    const { world, sipri, rss } = await loadAll();
+    const { world, sipri, rss, acledAggregates, acledEvents } = await loadAll();
     console.log(
       `[SAT-GEO] Sources chargées : ${world.features?.length} pays Natural Earth, `
       + `${Object.keys(sipri.indicators?.milex_constant_usd?.data || {}).length} pays SIPRI USD, `
-      + `${rss.items?.length} dépêches RSS`,
+      + `${rss.items?.length} dépêches RSS, `
+      + `ACLED : ${acledAggregates ? 'OK' : 'absent'} (${acledEvents?.features?.length || 0} événements)`,
     );
 
     // Jointure SIPRI ↔ Natural Earth
@@ -814,6 +1209,22 @@ function addCountryLabels(map, geojson) {
       console.log('[SAT-GEO] Pays non matchés (à investiguer si stratégiques) :', unmatched);
     }
 
+    // ACLED : flag d'état + données
+    if (acledAggregates && acledEvents) {
+      acledState.available = true;
+      acledState.aggregates = acledAggregates;
+      acledState.eventsGeoJson = acledEvents;
+    } else {
+      console.warn('[SAT-GEO] ACLED non chargé. Lancer python ingestion/acled.py pour activer l\'indicateur Conflits.');
+      // Désactiver visuellement le bouton ACLED dans le sélecteur
+      const acledBtn = document.querySelector('.indicator-btn[data-indicator="acled"]');
+      if (acledBtn) {
+        acledBtn.classList.add('disabled');
+        acledBtn.disabled = true;
+        acledBtn.title = 'Lancer python ingestion/acled.py pour activer cet indicateur';
+      }
+    }
+
     const map = buildMap(world);
 
     // RSS
@@ -823,6 +1234,7 @@ function addCountryLabels(map, geojson) {
     const buttons = document.querySelectorAll('.indicator-btn');
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => {
+        if (btn.disabled) return;
         buttons.forEach((b) => b.classList.remove('active'));
         btn.classList.add('active');
         currentIndicator = btn.dataset.indicator;
@@ -830,6 +1242,9 @@ function addCountryLabels(map, geojson) {
         hideTooltip();
       });
     });
+
+    // Contrôles ACLED (panneau secondaire)
+    initAcledControls(map);
 
     map.on('load', () => {
       loadingEl.classList.add('hidden');
@@ -879,6 +1294,11 @@ function addCountryLabels(map, geojson) {
 
       // Ajout des étiquettes des pays après le chargement de la carte
       addCountryLabels(map, world);
+
+      // Setup des couches ACLED (cercles + clusters) si disponibles
+      if (acledState.available) {
+        setupAcledLayers(map);
+      }
     });
 
   } catch (err) {

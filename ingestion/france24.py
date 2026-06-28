@@ -45,8 +45,8 @@ USER_AGENT = (
 
 ROOT = Path(__file__).resolve().parent.parent
 REGISTRY_PATH = ROOT / "data" / "registry" / "sources.json"
-RAW_DIR = ROOT / "data" / "raw"
-RSS_DIR = ROOT / "data" / "rss"
+RAW_DIR = ROOT / "data" / "raw"                          # privé, hors webroot
+RSS_DIR = ROOT / "site" / "data" / "rss"                 # servi par le sous-domaine
 RAW_OUTPUT = RAW_DIR / "france24-latest.xml"
 JSON_OUTPUT = RSS_DIR / "france24.json"
 

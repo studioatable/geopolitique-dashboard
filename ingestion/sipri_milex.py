@@ -94,8 +94,8 @@ MISSING_MARKERS = {None, "", "xxx", "...", ". .", "..", " ", "  "}
 
 ROOT = Path(__file__).resolve().parent.parent
 REGISTRY_PATH = ROOT / "data" / "registry" / "sources.json"
-RAW_DIR = ROOT / "data" / "raw"
-DEFENSE_DIR = ROOT / "data" / "defense"
+RAW_DIR = ROOT / "data" / "raw"                          # privé, hors webroot
+DEFENSE_DIR = ROOT / "site" / "data" / "defense"         # servi par le sous-domaine
 RAW_OUTPUT = RAW_DIR / "sipri-milex-latest.xlsx"
 JSON_OUTPUT = DEFENSE_DIR / "sipri_milex.json"
 

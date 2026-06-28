@@ -56,6 +56,10 @@
           Aucun
           <span class="indicator-hint">Frontières seules</span>
         </button>
+        <button data-indicator="acled" class="indicator-btn" type="button">
+          Conflits actifs
+          <span class="indicator-hint">Événements ACLED 7/30/90 j</span>
+        </button>
         <button data-indicator="milex_constant_usd" class="indicator-btn" type="button">
           Dépenses militaires
           <span class="indicator-hint">USD constants 2024, 2025</span>
@@ -64,6 +68,32 @@
           % du PIB
           <span class="indicator-hint">Dépenses militaires / PIB, 2025</span>
         </button>
+      </div>
+
+      <!-- Panneau de contrôles ACLED (affiché quand indicateur = acled) -->
+      <div class="acled-controls" id="acled-controls" hidden role="group" aria-label="Contrôles ACLED">
+        <div class="acled-control-group">
+          <label class="acled-label">Fenêtre</label>
+          <div class="acled-segment">
+            <button data-window="7d" class="acled-btn" type="button">7 j</button>
+            <button data-window="30d" class="acled-btn active" type="button">30 j</button>
+            <button data-window="90d" class="acled-btn" type="button">90 j</button>
+          </div>
+        </div>
+        <div class="acled-control-group">
+          <label class="acled-label">Affichage</label>
+          <div class="acled-segment">
+            <button data-viz="choropleth" class="acled-btn active" type="button">Choroplèthe</button>
+            <button data-viz="circles" class="acled-btn" type="button">Cercles</button>
+            <button data-viz="both" class="acled-btn" type="button">Les deux</button>
+          </div>
+        </div>
+        <div class="acled-control-group acled-types">
+          <label class="acled-label">Types d'événements</label>
+          <div class="acled-checkboxes" id="acled-types-checkboxes">
+            <!-- Cases à cocher injectées par JS depuis ACLED_EVENT_TYPES_UI -->
+          </div>
+        </div>
       </div>
 
       <!-- Conteneur MapLibre -->
